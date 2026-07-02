@@ -18,9 +18,30 @@ This is not a new idea invented for Linear — it's what already worked for Obi 
 
 ---
 
-## 1. Step zero — does a North Star document exist?
+## 1. Step zero — is this project already tracked, and does a North Star document exist?
 
-Before touching Linear at all, check for a **project constitution** — the doc that states, independent of what's built yet: what this is, who it's for, what's non-negotiable, what "done" philosophically means.
+### 1a. First, always: is a Linear project already connected here?
+
+This check comes **before everything else in this document**, including §1b below. Bootstrapping fresh and extending an already-tracked project are different operations with different risk profiles, and getting this wrong first is how a well-meaning setup pass corrupts someone's real, in-use workflow.
+
+- **Detect before assuming.** Search for an existing Linear project matching this codebase — by repo name, by asking the user directly ("is there already a Linear project for this?"), or both. Never assume a blank slate just because no one mentioned Linear.
+- **If nothing exists — proceed to §1b and the rest of the methodology normally.** This is the fresh-bootstrap path everything else in this doc assumes by default.
+- **If a Linear project already exists, STOP and shift into discovery mode, not setup mode:**
+  1. **Enumerate what's already there** before proposing anything: existing issues (open and closed), milestones/cycles, labels, documents, status-update history. Read it, don't just count it — understand what workflow is already in motion. **Then check the repo itself for what isn't there yet** — a fully-tracked project can still have an entire second track (another plan/roadmap doc in `docs/`) that was never mirrored (§4, backfill algorithm step 7). "Already tracked" describes the project, not necessarily every initiative inside it.
+  2. **Present a summary to the user, not a plan of action yet.** "Here's what I found: N open issues, M milestones named X/Y/Z, labels A/B/C, no Documents. Here's my read on how it's currently organized." Let the user correct a wrong read before anything gets written.
+  3. **Ask explicit yes/no questions before any write, category by category.** Do not bulk-apply this methodology's conventions on top of an existing structure. At minimum, confirm separately:
+     - Should new work extend the *existing* milestone/label structure, or does the user want it reorganized to match this methodology's conventions?
+     - Is retroactive backfill (§4) wanted at all, or is the existing issue history already the record of truth?
+     - Are there existing issues/milestones that are off-limits — owned by someone else, mid-flight, or otherwise not to be touched?
+     - OK to add labels to *existing* issues, or leave them exactly as they are and only label new ones going forward?
+     - OK to mirror North Star docs as Linear Documents (§1b), or is that redundant/unwanted here?
+  4. **Never bulk-create issues that might duplicate what's already there.** Search before every single create (§4 already states this as a general rule — for an already-tracked project it's not optional, it's the headline risk). When in doubt whether something's a duplicate, ask rather than create.
+  5. **Default to the most conservative interpretation of "extend."** If the existing structure conflicts with this methodology's conventions (different label taxonomy, Cycles instead of Milestones, no phase structure at all), the default move is to **adapt to what's already there**, not migrate it to match this doc. Propose a migration only if the user asks for one, and treat that as its own explicitly-confirmed, higher-risk action — not a side effect of routine setup.
+- **The failure mode this guards against:** an agent that treats "let's set up Linear tracking" as always meaning "bootstrap from zero," and in doing so duplicates issues, reorganizes milestones somebody was already relying on, or otherwise steps on a live workflow. Being fast here is not a virtue — the fresh-bootstrap path (the rest of this document) can move quickly because there's nothing to break yet. This path has something to break, so it moves in confirmed, reversible steps.
+
+### 1b. Then: does a North Star document exist?
+
+Before touching Linear structure at all (having established in §1a whether that's a fresh setup or an extension), check for a **project constitution** — the doc that states, independent of what's built yet: what this is, who it's for, what's non-negotiable, what "done" philosophically means.
 
 - **If it exists** (a manifesto, a README-as-vision, a strategy doc) — read it fully before designing any Linear structure. It is the thing every later structural decision gets judged against.
 - **If it doesn't exist** — this is a fork in the methodology, and the skill needs an opinion here:
@@ -80,6 +101,8 @@ Ask this once, at setup, alongside the North Star doc. It maps directly onto the
   4. File each as an issue in the correct phase milestone, `Done`, with a description that preserves the source material's own useful detail rather than paraphrasing it away.
   5. **Cross-check afterward:** the filed `Done` issues plus the open backlog should roughly reconstruct the full roadmap. A roadmap item with no corresponding issue (done or open) is a gap to fix before moving on — not something to skip silently.
   6. This is the single most valuable first pass on any pre-existing project — it turns "zero tracking" into "a full, provable history" in one session. (Reference scale: 24 retroactive `Done` issues from one read of Obi's roadmap doc.)
+  7. **Don't assume the mirrored North Star doc(s) are the only roadmap-shaped doc in the repo.** A project can accumulate more than one active engineering track over time (a migration plan *and* a separate rewrite/feature plan living in the same `docs/` folder), and only one of them may have ever been mirrored into Linear. Before considering backfill complete, scan the repo's docs directory (not just the doc(s) already known to Linear) for other plan/status docs with their own phase structure — treat each genuinely separate track as its own milestone set (§3), never folded into an existing one. (Found on the Obi dogfood run, 2026-07-02: a second fully-built track, a native-editor rewrite, had zero Linear presence despite the primary migration-roadmap doc being fully mirrored and up to date.)
+  8. **A doc's own "done"/"complete" claim is evidence, not proof — corroborate against the user before backfilling something that contradicts an existing tracked issue.** Docs can be aspirational, stale, or describe a plan that didn't fully land even when they read as confident status notes. If a source doc's claim would mean closing or contradicting an issue that's already open/in-progress in Linear, ask the user directly rather than trusting the doc text over the live tracker — the existing issue may reflect ground truth better than the doc does. (Found on the same run: a second doc claimed a feature was "one-for-one" complete, which would have meant closing an existing `Backlog` issue as `Done`; the user's own knowledge said that work was still in progress, contradicting the doc. Left the existing issue untouched and logged the discrepancy instead of resolving it unilaterally.)
 
 - **Search before creating, always.** Check for an existing issue/document/project match before filing anything new.
 - **The trivial/non-trivial line:** a real feature, fix, decision, or roadmap item gets an issue. A typo, config tweak, or comment-only change doesn't. When genuinely unsure, err toward filing — an extra issue is cheap; an untracked feature is drift.
@@ -206,7 +229,7 @@ For someone running many concurrent projects in one Linear workspace:
 - [ ] End-to-end test the attachment flow (§10) on a real issue with a real screenshot.
 - [ ] Create a test Initiative in Linear's UI and validate the attach-by-name flow from the API side (`save_project`'s `addInitiatives`, `save_document`'s `initiative` param, `save_status_update`'s `initiative` param) — confirm this is actually the right multi-project sequencing/rollup mechanism before recommending it (§12).
 - [ ] Decide whether the default label taxonomy (Product/Tool/Drop/Marketing) is genuinely generalizable or was shaped by Obi's specific portfolio — probably needs to ship as a *suggested starting set*, not a hardcoded default.
-- [ ] Decide how the skill detects "this project already has Linear tracking, extend it" vs. "bootstrap fresh" — needs a discovery step (list_projects/list_issues by repo name or similar) before deciding to create anything.
+- [x] ~~Decide how the skill detects "already tracked, extend it" vs. "bootstrap fresh"~~ — resolved in §1a (2026-07-03). **Not yet dogfood-validated** — the first planned test run (see `TEST-PLAN.md`) exercises this exact path against a project with real, known existing Linear state.
 - [ ] Decide whether the manifesto-writing sub-flow (§1) is a separate prerequisite skill, or embedded questions this skill asks inline when no North Star doc is found.
 - [ ] Stress-test the granularity choice (§4) — is feature-level really the right default, or should the skill infer a default from project size instead of always asking?
 - [ ] Decide the concrete trigger mechanics for drift audits (§6) — purely agent-suggested at milestone close, or backed by an actual scheduled reminder?
