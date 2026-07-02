@@ -1,0 +1,33 @@
+{
+  "name": "linear-methodology-skill",
+  "version": "1.0.0",
+  "description": "A methodology for how AI agents set up and maintain Linear project tracking — anchored North Star, backfilled history, honest dates. Installs as a Claude Code skill.",
+  "type": "module",
+  "license": "MIT",
+  "author": "tjcages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjcages/linear-methodology-skill.git"
+  },
+  "keywords": [
+    "linear",
+    "claude-code",
+    "claude-skill",
+    "project-tracking",
+    "ai-agents",
+    "methodology"
+  ],
+  "bin": {
+    "linear-methodology-skill": "bin/install.mjs"
+  },
+  "files": [
+    "bin",
+    "SKILL.md",
+    "METHODOLOGY.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
