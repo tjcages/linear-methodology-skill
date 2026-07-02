@@ -108,6 +108,7 @@ Ask this once, at setup, alongside the North Star doc. It maps directly onto the
 - **The trivial/non-trivial line:** a real feature, fix, decision, or roadmap item gets an issue. A typo, config tweak, or comment-only change doesn't. When genuinely unsure, err toward filing — an extra issue is cheap; an untracked feature is drift.
 - **Every issue gets a milestone.** An issue with no milestone is mis-filed.
 - **Labels: minimum viable taxonomy, shaped by project type (§2).** 3–5 area labels is usually enough regardless of type. Resist creating a label for every dimension someone can imagine — an overgrown label taxonomy stops being scannable, which defeats the point.
+- **Issue labels are team-scoped — in a many-projects-one-team workspace (§13), namespace a project's module labels under a label group.** A Tool's internal-seam labels (`stamp`/`agent`/`overlay`) are meaningless or actively confusing next to another project's issues in the same team. Linear label groups solve this cleanly and the API can create them (`create_issue_label` with `isGroup`, then `parent` on the children): one group named after the project, children = the module labels. Cross-project labels that genuinely mean the same thing everywhere (`Bug`, area labels like `iOS`/`Web` for Products) stay top-level. (Validated on visual-cursor, 2026-07-02.)
 - **Wire real dependencies** (`blockedBy`/`blocks`) for genuine sequencing. This is what lets Linear itself show the critical path instead of it living only in a doc or someone's head — including sequencing *between* separate projects (§12).
 
 ---
@@ -136,7 +137,7 @@ The manifesto is the constitution; the roadmap/state-of-the-union doc is current
 
 ## 7. Launch readiness — assets, infrastructure, and the exit plan
 
-Distinct from both the engineering roadmap (building the thing) and the rollout content calendar (§8, announcing it) — this is the **operational checklist** of what has to exist before a launch can happen at all. Relevant mainly to `Product` projects (§2) that haven't shipped publicly yet.
+Distinct from both the engineering roadmap (building the thing) and the rollout content calendar (§8, announcing it) — this is the **operational checklist** of what has to exist before a launch can happen at all. Relevant to *any* project type with a public launch ahead of it — the launch goal, not the project type, is what triggers this track. (Validated on the visual-cursor dogfood run, 2026-07-02: a tiny 4-file `Tool` whose tracking meta-goal was "ship to npm and launch" got a full launch-readiness + rollout structure, and that was right — while a large `Product` with no launch ambitions would need none of this. The §1b question-5 answer decides, not the size or type.)
 
 - **Asset inventory.** What needs to be created, and does it already exist: marketing images, video, a landing page or subpage, app-store screenshots/icons, a press kit. Enumerate this explicitly per launch — requirements genuinely differ between "ship a CLI tool," "ship an iOS app," and "ship a consumer web product," so don't assume a template applies unchanged.
 - **Infrastructure.** Does a website already exist to hang this off of, or does one need to be built? Does it need a dedicated subdomain, or does it live as a subpage of something existing? Does this require an App Store / Play Store listing (developer accounts, review lead time, compliance forms)? These have **long lead times and hard external dependencies** (App Store review is not instant) — they belong on the roadmap early as real dated milestones, not a last-minute scramble discovered days before launch.
@@ -194,7 +195,7 @@ This is the checklist to hand the user upfront: *"here's what you need to click 
 - **Authorizing the Linear connector itself** (the initial OAuth grant)
 
 **Fully automatable via the MCP:**
-- Projects, Milestones, Issues, issue Labels (team-scoped, unlike project labels), Documents, Status updates, Relations (`blocks`/`blockedBy`), Comments, **Attachments** (§10)
+- Projects, Milestones, Issues, issue Labels (team-scoped, unlike project labels — **including label groups**, via `isGroup` + `parent`, §4), Documents, Status updates, Relations (`blocks`/`blockedBy`), Comments, **Attachments** (§10)
 
 The skill's setup flow should surface this split explicitly and early — tell the user the 4–5 things they need to click, then proceed to automate everything else, rather than discovering these gaps mid-task.
 

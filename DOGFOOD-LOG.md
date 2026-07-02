@@ -52,9 +52,25 @@ Three targets queued, in order. Full detail (what each one is meant to stress-te
 **Project type:** `Tool`
 **Status:** planned, not yet run.
 
-### 3. "Visual cursor" (unnamed) — fresh bootstrap, `Tool`, small-project edge case
+### 3. "Visual cursor" (visual-cursor) — fresh bootstrap, `Tool`, small-project edge case
 
-**Date:** TBD
-**Repo:** unknown — ask the user for the path before starting.
-**Project type:** `Tool`
-**Status:** planned, not yet run. Tests the small/early-stage North Star judgment call in §1b.
+**Date:** 2026-07-02 (run out of order — Target 2's repo path wasn't available yet; user supplied this one first)
+**Repo:** `~/Workspace/visual-cursor`
+**Project type:** `Tool` (Vite plugin + React overlay, dev-only npm package — 4 source files, ~1,300 LOC, 1 commit)
+**Status:** run complete.
+
+**What worked:**
+- §1a resolved in one query: the workspace has exactly one project (Obi), nothing matching — clean fresh-bootstrap. The already-tracked path's caution never triggered, correctly.
+- **The North Star judgment call (the thing this target was chosen to stress) worked as written.** The call: the README is already a README-as-vision (what/who/how/constraints, unusually complete for a v0.1) — skip the doc-writing exercise. Said so explicitly per §1b's instruction; user agreed immediately. The anchoring-questions fallback never ran, and didn't need to.
+- **§1b question 5 (the tracking meta-goal) was the decisive question of the whole run.** Expected answer for a tiny tool: "just a durable record." Actual answer: "ship to npm and launch — website, launch tweet, follow-up marketing, portfolio, assets." That single answer converted the structure from one milestone + a handful of issues into three tracks (engineering backfill / launch readiness / rollout) with real cross-track `blockedBy` relations. Size predicted nothing; the meta-goal predicted everything.
+- Granularity question (§4): asked explicitly; user chose feature-level even at this size — 5 backfilled `Done` issues from a single commit's evidence (README + shipped source). The question did not feel like friction at this size, contra the test plan's worry — it took one question and shaped the backfill correctly.
+- §11 checklist: everything manual was already done at the workspace level (project labels exist, connector authorized) — surfaced as "nothing for you to click," which is the §0 one-time-cost-per-workspace claim working as designed on the second project.
+
+**What broke / friction hit:**
+- **Issue labels are team-scoped, and the methodology's Tool guidance collides with its own multi-project convention.** §2 says a Tool's area labels should be its internal seams (`stamp`/`agent`/`overlay`), but §13 says many projects share one team — so those module labels would land in the same namespace as Obi's labels, where a bare `agent` label is actively confusing. Solved with a Linear **label group** named after the project (creatable via the API — `isGroup` + `parent`), children = the module labels. The methodology didn't mention label groups at all; §4 and §11 now do.
+- **§7 claimed launch readiness is "relevant mainly to Product projects" — wrong.** This run produced a `Tool` with a full launch-readiness + rollout structure because the *goal* was a launch. Fixed §7 to key the track off the §1b-question-5 answer, not the project type.
+- **Judgment call, logged not yet doc'd:** did *not* mirror the README as a Linear Document, despite the Obi reference mirroring all its North Star docs. Reasoning: an npm package's README is its public, single-source doc; a Linear mirror adds a sync burden with no discovery value when the project description already links it. This is a calibration the methodology's mirroring guidance doesn't currently express — worth revisiting if a future run hits the same call.
+
+**Comparison to the Obi reference (§15 step 4):** same recognizable shape at 1/10 the scale — backfilled `Done` history in a milestone, forward tracks with wired dependencies, labels, a bootstrap status update. Proportionality held: 3 milestones vs. 15, 11 issues vs. 39+, no Documents vs. 5.
+
+**What shipped in Linear:** project `visual-cursor` (team Off-brand, `Tool` label, lead ty), 3 milestones, 11 issues (OFF-51–OFF-61: 5 Done backfill + 4 launch-readiness + 2 rollout), 4 `blockedBy` relations, 1 label group + 3 module labels, 1 status update.
