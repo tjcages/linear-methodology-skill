@@ -1,0 +1,237 @@
+# Linear Tracking Methodology (working draft — pre-packaging)
+
+> **What this is.** A draft of the methodology behind how Claude should set up and maintain Linear tracking for a software project — built by doing it for real on Obi (the Socials app), then generalized. This is **not yet a packaged skill.** Status (2026-07-03): methodology fully drafted, now in the **dogfood-testing phase** (§15) across the owner's other real projects. Packaging/distribution strategy is still deliberately held (§16) until testing is done.
+>
+> **The differentiator.** Existing community Linear skills (`linear-claude-skill`, `linear-cli-skill`) teach Claude *how to call Linear* — CRUD wrappers, auth, GraphQL fallbacks. That's solved; Claude Code's own Linear MCP already does it. What's missing from the ecosystem is *how to track a project well* — the methodology, not the mechanics. This doc is that methodology.
+>
+> **Target user.** Someone running many concurrent projects (the owner's own description), who wants each one properly tracked without personally designing the tracking scheme every time, and without the tracking decaying into busywork disconnected from why the project exists.
+
+---
+
+## 0. The core thesis
+
+Tracking infrastructure without a shared theory of the product decays into a pile of tickets nobody trusts. The fix isn't a better ticket template — it's **anchoring the tracking structure to a North Star document**, so every phase, milestone, and issue is a *derivation* of something true about the project, not an invention of the tracking tool.
+
+This is not a new idea invented for Linear — it's what already worked for Obi (`docs/manifesto.md` → `docs/inventory-audit.md` → `docs/migration-roadmap.md`, then Linear mirrors + derives structure from that trio). The methodology generalizes that pattern.
+
+**Automation-first, manual setup is an acceptable one-time cost.** Wherever the API/MCP can do something, it should — the goal is agents managing the tracking day-to-day, not a human re-doing setup steps per project. A handful of one-time manual clicks (creating a Cycle scheme, a label taxonomy, an Initiative) is fine; *recurring* manual burden is the thing to design away.
+
+---
+
+## 1. Step zero — does a North Star document exist?
+
+Before touching Linear at all, check for a **project constitution** — the doc that states, independent of what's built yet: what this is, who it's for, what's non-negotiable, what "done" philosophically means.
+
+- **If it exists** (a manifesto, a README-as-vision, a strategy doc) — read it fully before designing any Linear structure. It is the thing every later structural decision gets judged against.
+- **If it doesn't exist** — this is a fork in the methodology, and the skill needs an opinion here:
+  - **Don't silently skip it and jump to ticket-filing.** A tracking scheme built on nothing decays fastest.
+  - **Don't force a heavyweight doc-writing exercise on every trivial project either.** Calibrate to project size — a weekend script doesn't need a 12-part manifesto.
+  - The right move: **ask a small number of anchoring questions** and write a lightweight North Star doc from the answers if none exists and the project is substantial enough to warrant one. Skip this step outright for genuinely small/disposable projects — use judgment, and say so to the user rather than silently deciding.
+
+**The anchoring questions** (the small set to ask when no North Star doc exists):
+1. One-sentence pitch — what is this?
+2. Who is this for?
+3. 3–5 non-negotiables — what's true regardless of what's built yet?
+4. What's explicitly out of scope?
+5. **What is the user actually trying to achieve by tracking this** — not the product's goal, the *user's* goal for using Linear at all. (For the reference implementation, the answer was *consistent release cadence* — see §9. This single answer shapes how the whole tracking scheme should behave, not just what it contains.)
+6. **Project type** — see §2. This is foundational enough to ask alongside the rest, not decided later.
+
+**Companion docs**, when the project is a migration or has real architectural complexity (mirrors what worked for Obi):
+- A **proof/audit doc** — if migrating an existing codebase onto a new model, enumerate what exists and map each piece to its destination, so "nothing is lost" is provable, not just claimed.
+- A **roadmap/plan doc** — the phased execution plan. This is what Linear's phase-milestone structure gets derived from 1:1.
+
+These three (constitution / proof / plan) aren't Obi-specific — they're a generalizable pattern: **why → what's true today → what happens next.** Not every project needs all three; the constitution is closest to mandatory (for anything non-trivial), the other two are conditional on the project's shape.
+
+---
+
+## 2. Project type — the decision that predicts most of the rest
+
+Ask this once, at setup, alongside the North Star doc. It maps directly onto the four Project Labels already in use (`Product` / `Tool` / `Drop` / `Marketing`) and predicts most of the downstream structural decisions in §3.
+
+- **Product** — spans multiple platforms/mediums by nature: web, iOS, macOS, Android, others. Structural consequence: **area labels should be platform-based** (`iOS`/`Web`/`macOS`/`Android`/`Backend`, as relevant) because "which platform does this touch" is a real, recurring filter. Milestones are usually **phase-based** (an engineering roadmap), plus — once there's a public launch — a parallel **rollout/content-calendar track** and a **launch-readiness track** (§7, §8).
+- **Tool** — typically single-platform (just macOS, just web, just a CLI). Structural consequence: **platform-split area labels are usually noise** — don't force the iOS/Web/Backend taxonomy onto something that only ever runs in one place. A Tool's area labels should reflect its actual internal seams instead (e.g. `parser`/`cli`/`ui`, or whatever modules it actually has).
+- **Drop** — a quick, stunty, low-stakes push: a subtle social experiment, a one-off bit, something disposable by design. Structural consequence: **minimal structure on purpose** — likely just a short content-calendar (§8), no engineering-phase milestones, no launch-readiness track (§7). Over-structuring a Drop defeats the point of it — it's supposed to be fast and cheap to run.
+- **Marketing** — durable marketing infrastructure and campaigns: a website, an event site (custom-built or not), sustained brand campaigns. Structural consequence: **track it with the same rigor as a Product/Tool**, not as an afterthought just because it's "marketing" — a custom event site is real engineering work and may need its own engineering-phase milestones (§3) plus a content-calendar layered on top (§8), not just the content-calendar alone.
+
+**Rule of thumb (Product vs. Tool):** *does this project's identity require picking a platform, or does it stay whole across many?*
+
+**Rule of thumb (Drop vs. Marketing):** *is this disposable by design — a stunt, an experiment, meant to be quick and low-stakes — or does it need durable infrastructure and sustained tracking, like a real site or an ongoing campaign?* Drop gets minimal structure on purpose; Marketing gets full structure because it's real, ongoing work.
+
+---
+
+## 3. Deriving Linear structure from the North Star (and the project type)
+
+- **Milestones = the roadmap's phases, 1:1** (for Product/Tool projects with an engineering roadmap). Don't invent milestones that aren't in the plan; don't split or merge phases arbitrarily. If the roadmap doc changes, the milestones should be revisited, not left to drift.
+- **Every genuinely separate timeline gets its own milestone set, never folded together.** A Product can have up to three concurrent tracks: engineering phases (§3), launch readiness (§7), and rollout content (§8) — conflating any of them makes all of them illegible. A Drop/Marketing project may be *only* the content track.
+- **Target dates only with a real date signal.** Don't fabricate precision — a milestone with a made-up date is worse than one with none, because it reads as a commitment nobody made. (See §9 for how this becomes an accountability mechanism, not just metadata.)
+- **Cycles vs Milestones:** most workspaces don't have Cycles (sprints) enabled, and the API can't create them. Default to Milestones for phase/theme grouping. If a workspace *does* have Cycles already, they're the right tool for genuinely time-boxed sprints — the two aren't mutually exclusive (Milestones = thematic phases; Cycles = time-boxes within them), but don't try to create Cycles programmatically; that's a manual-setup item (§11).
+
+---
+
+## 4. Breaking work into issues
+
+- **Granularity is a real decision, not a default to assume.** Offer the choice explicitly when setting up tracking for the first time on a project (feature-level vs. changelog-level, similar to how this was asked for Obi) — don't silently pick one.
+- **Retroactive backfill matters.** When adopting Linear on an existing codebase, mine what already exists (a roadmap's checkmarks, a changelog, git history) and file completed work as `Done` — starting the record from a blank slate erases real progress and makes the project look less mature than it is. This is a first-class step, not an afterthought.
+
+  **The backfill algorithm (concrete procedure, not just the principle):**
+  1. Enumerate every source of "what's already done" for the target project: a roadmap/plan doc with status markers, a CHANGELOG, a progress log, git log / merged PR history, a prior tracker's closed issues if one existed.
+  2. Walk the highest-signal source first (usually the roadmap doc — it's already organized by phase) and extract one candidate completed item **per distinct shipped feature, not per commit** (granularity default from the bullet above).
+  3. **Only mark something `Done` with real evidence** — a checkmark in a doc, a merged commit, an explicit "shipped" note. Ambiguous or partial items stay open, or get flagged to the user directly — never guess completion.
+  4. File each as an issue in the correct phase milestone, `Done`, with a description that preserves the source material's own useful detail rather than paraphrasing it away.
+  5. **Cross-check afterward:** the filed `Done` issues plus the open backlog should roughly reconstruct the full roadmap. A roadmap item with no corresponding issue (done or open) is a gap to fix before moving on — not something to skip silently.
+  6. This is the single most valuable first pass on any pre-existing project — it turns "zero tracking" into "a full, provable history" in one session. (Reference scale: 24 retroactive `Done` issues from one read of Obi's roadmap doc.)
+
+- **Search before creating, always.** Check for an existing issue/document/project match before filing anything new.
+- **The trivial/non-trivial line:** a real feature, fix, decision, or roadmap item gets an issue. A typo, config tweak, or comment-only change doesn't. When genuinely unsure, err toward filing — an extra issue is cheap; an untracked feature is drift.
+- **Every issue gets a milestone.** An issue with no milestone is mis-filed.
+- **Labels: minimum viable taxonomy, shaped by project type (§2).** 3–5 area labels is usually enough regardless of type. Resist creating a label for every dimension someone can imagine — an overgrown label taxonomy stops being scannable, which defeats the point.
+- **Wire real dependencies** (`blockedBy`/`blocks`) for genuine sequencing. This is what lets Linear itself show the critical path instead of it living only in a doc or someone's head — including sequencing *between* separate projects (§12).
+
+---
+
+## 5. Lifecycle discipline (already validated, unchanged from the Obi rollout)
+
+`Backlog` → `In Progress` the moment work starts → `Done` only once actually shipped (merged, checks pass, and — for anything visible — verified running).
+
+- Never skip straight to `Done`.
+- Never leave active work sitting in `Backlog`.
+- A session that starts something and can't finish it leaves the issue `In Progress` with a comment on what's left — never silently reverts it to `Backlog`.
+- **Close the loop before ending a session.** If Linear-tracked work happened, the issue gets updated (state and/or comment) before the session ends. A session that ships something but leaves Linear stale is not done — this is the Linear-equivalent of a visual progress-log discipline, and the two should be thought of as one unit of "did the work AND recorded the work."
+
+---
+
+## 6. North Star drift audits — staying on track over a long build
+
+The manifesto is the constitution; the roadmap/state-of-the-union doc is current reality. Over a project's life — many phases, many sessions, possibly many agents — there's real risk of drifting from the original intent without anyone noticing: features accrete, scope creeps, the built thing quietly stops matching what was set out to build. **The whole point of writing a North Star doc first is to be able to catch this** — it's useless as a constitution if nobody ever re-reads it.
+
+- **Cadence:** trigger a drift audit at natural checkpoints — the close of each phase/milestone, not an arbitrary calendar date. A phase boundary is a real inflection point; a fixed schedule isn't, and drifts out of sync with actual project rhythm. Long-running projects with infrequent phases may also warrant a longer-interval check (e.g. quarterly) as a backstop.
+- **What it produces:** the same move that started the Obi migration, run recursively — reread the North Star doc, walk the shipped work since the last audit, and explicitly answer: does this still serve the thesis? Is there scope creep with no home in the manifesto? Should the manifesto itself deliberately evolve (rare, and should be a conscious edit — never silent drift), or should the built thing be corrected back toward it?
+- **Where the output lands:** if it's a genuine health signal, it becomes a Linear project status update (§9); any corrective work identified gets filed as real issues, same as any other work. An audit whose findings don't land as tracked items is just a document nobody acts on.
+- **Who triggers it:** the skill should proactively *suggest* a drift audit at milestone-closing time ("Phase N just closed — want a quick check against the North Star before starting Phase N+1?") rather than waiting to be asked.
+
+---
+
+## 7. Launch readiness — assets, infrastructure, and the exit plan
+
+Distinct from both the engineering roadmap (building the thing) and the rollout content calendar (§8, announcing it) — this is the **operational checklist** of what has to exist before a launch can happen at all. Relevant mainly to `Product` projects (§2) that haven't shipped publicly yet.
+
+- **Asset inventory.** What needs to be created, and does it already exist: marketing images, video, a landing page or subpage, app-store screenshots/icons, a press kit. Enumerate this explicitly per launch — requirements genuinely differ between "ship a CLI tool," "ship an iOS app," and "ship a consumer web product," so don't assume a template applies unchanged.
+- **Infrastructure.** Does a website already exist to hang this off of, or does one need to be built? Does it need a dedicated subdomain, or does it live as a subpage of something existing? Does this require an App Store / Play Store listing (developer accounts, review lead time, compliance forms)? These have **long lead times and hard external dependencies** (App Store review is not instant) — they belong on the roadmap early as real dated milestones, not a last-minute scramble discovered days before launch.
+- **Structure this as its own milestone set** (e.g. "Launch Readiness"), sitting between the last engineering phase and the first rollout-content milestone — a third track alongside the engineering phases (§3) and the rollout calendar (§8), the same way Obi's Phase 0–5 track and its `Launch:` rollout track already coexist without being conflated.
+- **The exit plan.** What does "launched" actually mean, and what happens after — a defined steady-state (an ongoing maintenance cadence), a defined wind-down, or does launch trigger the start of an entirely new phase? This deserves its own explicit milestone/issue ("Launch & exit plan") rather than staying implicit — a project without an articulated exit condition tends to just continue indefinitely without anyone deciding that on purpose.
+
+---
+
+## 8. Post-launch content & campaign structuring
+
+Once launch-readiness assets exist, the **sequence and cadence of what actually goes out, and when**, needs the same tracked-structure treatment as engineering work. This generalizes what Obi's rollout milestones already do:
+
+- **Model a campaign as a sequence of dated beats.** Launch announcement → +N follow-up (a feature spotlight, a behind-the-scenes) → +N more. The spacing between beats is a real decision (weekly cadence, react-to-metrics, etc.) — make it an explicit milestone-per-beat, don't leave it implicit in someone's head.
+- **A repository of assets tied to each beat.** Every campaign-beat issue should carry (via the automatable attachment flow, §10) the actual creative for that beat — the image, the copy draft, the video — so the campaign plan is self-contained evidence rather than a plan that references assets living somewhere else.
+- **This is exactly the `Drop`/`Marketing` project-type shape (§2), but the two aren't identical here.** A quick stunt/experiment is a `Drop` — a lightweight Linear project that's *just* this content-calendar, minimal structure, fast to spin up and tear down. A durable campaign with real infrastructure behind it (a custom event site, sustained multi-week brand work) is `Marketing` — it gets the content-calendar *plus* its own engineering-phase milestones (§3) for the infrastructure build, tracked with full rigor. Either way, if the campaign lives inside a Product's own Linear project instead of as its own, keep it a clearly separate milestone set, never merged into the engineering phases.
+
+---
+
+## 9. Accountability & release cadence
+
+Two different audiences, two different channels — don't conflate them:
+
+- **Linear status updates** (project health: onTrack/atRisk/offTrack + summary) are for **async/other-stakeholder visibility** — reserved for real milestone moments: a phase completing, a health change (newly blocked/at-risk — report bad news the moment it's known, don't wait for a checkpoint), a significant scope change. Roughly one per closed milestone, plus ad-hoc ones on health changes. **Not** for routine incremental work — individual issue state already covers that.
+- **Talking to the user in chat is not replaced by a Linear status update.** Meaningfully completed work still gets surfaced directly in conversation — Linear is the durable record; chat is the live handoff. A session shouldn't rely on "I posted a Linear update" as the reason to skip telling the user what happened.
+
+**On top of that, real accountability for dates** — this is sharper than plain review cadence:
+
+- **Anchor to the user's actual meta-goal (§1, question 5), not just "ship the roadmap."** For the reference implementation, the goal was *consistent release cadence* — a materially different objective from "eventually finish everything," and it changes what the tracking should optimize for: regular, smaller, dated releases over one eventual big-bang finish.
+- **Realistic target dates, set on purpose.** A milestone's target date should come from an actual estimate of the remaining work plus a sanity check against real dependencies (App Store review lead time, asset production time, other milestones' dates) — not an aspirational guess. If a proposed date doesn't survive that sanity check, say so *before* it goes into Linear, not after it's missed.
+- **Holding the user to the date.** As a milestone's target date approaches without its issues trending toward `Done`, that's exactly the "health materially changed" trigger for an `atRisk` status update — don't wait for the date to arrive and pass silently. Beyond the Linear-side signal, the skill should be willing to **proactively raise this in conversation** — the point of "holding the user to it" only works if it surfaces where they'll actually see it, not buried in a system they might not be watching.
+- **This only works if dates were realistic in the first place.** An accountability mechanism built on fantasy dates just produces alarm fatigue and gets ignored — the sanity-check step above is load-bearing, not optional.
+
+---
+
+## 10. Images in tickets
+
+- **When:** anything visually verifiable — UI screenshots, before/after, mockups, campaign creative (§8). Same test as a "can I show it?" rule, not "is this a big feature?" A visible bug fix counts; a backend/schema change doesn't need one.
+- **How (validated, fully automatable):** `prepare_attachment_upload` (issue + filename + contentType + size) → direct PUT of raw bytes to the signed URL → `create_attachment_from_upload` (assetUrl → issue). No manual step. A `create_attachment` (base64) fallback exists for very small files but burns context — prefer the PUT flow.
+- **Where:** attach directly to the issue that represents the shipped feature or campaign beat. Linear should be self-sufficient evidence — it shouldn't require cross-referencing another system (like a separate progress log) to see what a "Done" issue actually looked like.
+
+*(Not yet end-to-end tested in a live session — flagged in §14 as a pre-packaging validation item.)*
+
+---
+
+## 11. Manual vs. API — the real split (empirically validated on Obi, 2026-07-02)
+
+This is the checklist to hand the user upfront: *"here's what you need to click before I can automate the rest."* Per §0, this is meant to be a **one-time cost per workspace**, not per project.
+
+**Manual only — no MCP/API tool exists, must be done in Linear's own UI:**
+- Creating **Cycles/sprints** (API can only list existing ones)
+- Creating **Project Labels** (the cross-project taxonomy, e.g. Product/Tool/Drop/Marketing, §2) — `list_project_labels` reads them, nothing creates them
+- Creating **Initiatives** (the cross-project rollup, §12) — same pattern: attachable by name/ID once it exists, not creatable
+- Uploading a **custom image as a project icon** — the icon field only accepts a small built-in icon-name allowlist or an emoji code, never an uploaded image
+- Connecting the **GitHub integration** (repo-level OAuth/webhook setup)
+- **Authorizing the Linear connector itself** (the initial OAuth grant)
+
+**Fully automatable via the MCP:**
+- Projects, Milestones, Issues, issue Labels (team-scoped, unlike project labels), Documents, Status updates, Relations (`blocks`/`blockedBy`), Comments, **Attachments** (§10)
+
+The skill's setup flow should surface this split explicitly and early — tell the user the 4–5 things they need to click, then proceed to automate everything else, rather than discovering these gaps mid-task.
+
+---
+
+## 12. Cross-project sequencing via Initiatives
+
+For someone running many related tools/products, Initiatives are Linear's mechanism for grouping multiple *projects* — the API can attach existing projects, documents, and status updates to an Initiative by name once it exists (created manually, §11).
+
+- **What this is for:** modeling how separate Linear projects — which might be entirely separate repos/tools/products — relate to each other: which feed into which, what the build/release sequencing between them should be, and giving a single rollup view instead of requiring N separate project pages to see the whole picture.
+- **When to use it:** when two or more tracked projects have a real relationship — one is a dependency of another, they share a launch window, or they're conceptually part of one larger initiative (e.g. several `Tool` projects that all feed into one `Product`). Don't create an Initiative for unrelated projects that just happen to share an owner.
+- **Sequencing lives in relations, not just the Initiative.** The Initiative is the rollup/grouping; the actual enforceable sequencing ("this project must ship before that one can start") still belongs as real `blockedBy`/`blocks` relations on the specific issues/milestones that are actually blocking (§4). The Initiative gives the bird's-eye view; relations give the dependency graph. Don't treat the Initiative as a substitute for real relations.
+- **Manual to bootstrap, cheap to maintain** — exactly the acceptable shape described in §0: a one-time UI click to create it, then everything after (attaching projects, posting rollup-relevant documents/status-updates) is API-automatable.
+
+*(Not yet validated end-to-end — flagged in §14.)*
+
+---
+
+## 13. Multi-project conventions (the actual target user)
+
+For someone running many concurrent projects in one Linear workspace:
+
+- **Project Labels are the cross-project taxonomy** (§2) — decide this **once per workspace**, not once per project. When a new project spins up, it gets tagged from the existing set; the set itself is a workspace-level decision, not something to re-litigate per project.
+- **Team structure:** one team can hold many projects. Only split into multiple teams for a real ownership boundary (different people/orgs) — not just because the products are different. Splitting teams needlessly fragments issue numbering and search.
+- **Naming conventions, held constant across projects:** milestone naming pattern (`Phase N — Theme`), issue-branch convention (use Linear's auto-generated branch name verbatim, e.g. `user/proj-N-slug` — never hand-roll a parallel scheme).
+- **Initiatives are the cross-project home base** — see §12 for the full treatment.
+
+---
+
+## 14. Open gaps — validate before packaging
+
+- [ ] End-to-end test the attachment flow (§10) on a real issue with a real screenshot.
+- [ ] Create a test Initiative in Linear's UI and validate the attach-by-name flow from the API side (`save_project`'s `addInitiatives`, `save_document`'s `initiative` param, `save_status_update`'s `initiative` param) — confirm this is actually the right multi-project sequencing/rollup mechanism before recommending it (§12).
+- [ ] Decide whether the default label taxonomy (Product/Tool/Drop/Marketing) is genuinely generalizable or was shaped by Obi's specific portfolio — probably needs to ship as a *suggested starting set*, not a hardcoded default.
+- [ ] Decide how the skill detects "this project already has Linear tracking, extend it" vs. "bootstrap fresh" — needs a discovery step (list_projects/list_issues by repo name or similar) before deciding to create anything.
+- [ ] Decide whether the manifesto-writing sub-flow (§1) is a separate prerequisite skill, or embedded questions this skill asks inline when no North Star doc is found.
+- [ ] Stress-test the granularity choice (§4) — is feature-level really the right default, or should the skill infer a default from project size instead of always asking?
+- [ ] Decide the concrete trigger mechanics for drift audits (§6) — purely agent-suggested at milestone close, or backed by an actual scheduled reminder?
+- [ ] Decide default structure/naming for "Launch Readiness" milestones (§7) — one milestone or several (assets vs. infra vs. store submission as separate items)?
+- [ ] Decide how proactive at-risk flagging (§9) actually reaches the user — next-session chat message, or something closer to real-time (a scheduled check)?
+
+---
+
+## 15. Testing protocol — dogfooding before packaging
+
+Before this becomes a distributable skill, it needs to survive being run on real, independent projects — not just be internally consistent on paper.
+
+**The protocol, per dogfood target:**
+1. **Don't invoke a packaged skill yet — walk the methodology by hand**, exactly as a fresh agent would: read this doc section by section, in order, and actually do what each section says for the target project. This is the realistic test, because a packaged skill will do exactly this.
+2. **Log every point of friction as it happens** — a question the doc didn't anticipate, an ambiguous instruction, a step that needed outside judgment not written down anywhere. Friction found here is exactly what would make a packaged skill behave inconsistently across users; the doc should absorb it.
+3. **Log every genuinely new project shape** the doc didn't anticipate (e.g. no discoverable North Star doc and no user appetite to write one; a Tool that's actually two Tools; a Drop that grows into Marketing mid-flight).
+4. **Compare the end state against the Obi reference implementation** — does the resulting Linear setup have the same *kind* of structure (milestones, labels, backfilled history, relations) even though the specifics differ? If the shape is unrecognizable, something in the methodology under-specified the outcome.
+5. **Update this doc immediately, not at the end of a testing phase** — each dogfood run should leave the methodology measurably better. Same "leave it cleaner than you found it" discipline the methodology itself preaches, applied reflexively.
+
+**Where results live:** [`DOGFOOD-LOG.md`](./DOGFOOD-LOG.md) in this repo — one entry per project tested, dated, with what worked, what broke, and what changed in the methodology as a result. This is the evidence base for "this actually works across projects," which is the whole claim being made before distributing it.
+
+**Exit criteria for "ready to package":** every item in §14 (open gaps) is either resolved or deliberately deferred with a stated reason, and at least 2–3 dogfood runs across genuinely different project types (at minimum: one `Tool`, one `Product` with a real launch, ideally one `Drop`/`Marketing`) have each produced a clean run with no undocumented judgment calls.
+
+---
+
+## 16. Distribution — deliberately not decided here
+
+Per the owner: hold on packaging/distribution strategy until this methodology is validated and the open gaps above are closed. This doc is the input to that decision, not the decision itself.
