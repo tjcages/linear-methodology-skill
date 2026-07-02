@@ -121,6 +121,7 @@ Ask this once, at setup, alongside the North Star doc. It maps directly onto the
 - Never leave active work sitting in `Backlog`.
 - A session that starts something and can't finish it leaves the issue `In Progress` with a comment on what's left — never silently reverts it to `Backlog`.
 - **Close the loop before ending a session.** If Linear-tracked work happened, the issue gets updated (state and/or comment) before the session ends. A session that ships something but leaves Linear stale is not done — this is the Linear-equivalent of a visual progress-log discipline, and the two should be thought of as one unit of "did the work AND recorded the work."
+- **Bootstrap isn't done until the discipline is installed where future agents will actually read it.** The setup session knows these rules; the next session won't unless they're written into the repo's own always-loaded context (`CLAUDE.md` or equivalent) — the reference implementation did this (a "Linear tracking (non-negotiable)" section in CLAUDE.md, mirrored as a Linear Document). Without it, tracking goes stale the moment a different session ships work — observed on the visual-cursor dogfood run (2026-07-02), where new commits and WIP appeared within the hour of bootstrap from parallel sessions that had no tracking rule to follow, and the human had to notice and ask for a re-scan. Wiring the ruleset into the repo is a first-class bootstrap step, not a nice-to-have — with the team/project names, label set, and milestone scheme filled in per project.
 
 ---
 

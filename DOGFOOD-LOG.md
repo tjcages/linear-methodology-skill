@@ -47,10 +47,25 @@ Three targets queued, in order. Full detail (what each one is meant to stress-te
 
 ### 2. Traces — fresh bootstrap, `Tool`
 
-**Date:** TBD
-**Repo:** unknown — not found under `~/Workspace/`; ask the user for the path before starting.
-**Project type:** `Tool`
-**Status:** planned, not yet run.
+**Date:** 2026-07-02 (run after Target 3 — the repo path arrived second)
+**Repo:** `~/Workspace/traces` (standalone skill repo, github.com/tjcages/traces, symlinked into `~/.claude/skills/traces`)
+**Project type:** `Tool` (a Claude Code skill — progress-log engine + installer, 27 commits, v0.1.0 cut same day)
+**Status:** run complete.
+
+**What worked:**
+- Second consecutive clean §1a fresh-bootstrap resolution (one `list_projects` query) and second clean run of the §1b judgment call: README + SKILL.md together are the North Star (the SKILL.md *is* the method doc) — user agreed without amendment.
+- **The backfill algorithm hit its best case: a real CHANGELOG.** Highest-signal source ranked exactly as §4 predicts — CHANGELOG [0.1.0] was already feature-organized, so 8 `Done` issues fell straight out of its section structure, with the 27-commit git log corroborating each. Faster and cleaner than either previous backfill (Obi: roadmap doc; visual-cursor: single commit + README).
+- Label-group pattern from the visual-cursor run reused verbatim (`traces` group → `engine`/`tabs`/`installer`/`method`) — the §4/§13 fix generalized on first reuse.
+- **Backfill as audit, again:** the cross-check surfaced a doc/reality contradiction — the CHANGELOG claims the repo dogfoods its own `progress/` log, but no `progress/` directory exists. User wasn't sure either (likely a leftover from when Traces lived inside socials). Filed as an open issue (OFF-78: make doc and reality agree) rather than assuming either direction — the §4-step-8 lesson from Target 1 (corroborate, don't trust prose) applied within the same day.
+- Meta-goal question again did the structural work: "distribute/publish it" → same three-track shape as visual-cursor (backfill / distribution readiness / rollout), with the channel decision (OFF-76) explicitly marked as the gate.
+
+**What broke / friction hit:**
+- **Mid-session revisit of Target 3 exposed the real gap: bootstrap doesn't install the discipline.** Within an hour of visual-cursor's bootstrap, parallel sessions had landed a commit (security hardening) and WIP (ESLint/CI) that Linear knew nothing about — and the *user* had to notice and ask for a re-scan. The reference implementation solved this with a CLAUDE.md tracking protocol; the methodology described that discipline (§5) but never said "installing it into the repo is a bootstrap step." Fixed: §5 now makes ruleset-installation a first-class bootstrap step. Neither visual-cursor nor traces has the ruleset installed yet — flagged to the user as the follow-up that closes this gap for real.
+- Tool friction, minor: `save_project`'s `icon` param rejected both attempted icon names with no discoverable allowlist (created the project without an icon); one `save_milestone` call failed on a transient harness-side classifier error and succeeded verbatim on retry. Neither is a methodology problem; both are worth knowing for a packaged skill (icon: omit unless the name is known-good; transient failures: retry once before rerouting).
+
+**Comparison to the Obi reference (§15 step 4):** recognizable same-shape again — 3 milestones, 13 issues (8 Done backfill + 5 open), 3 `blockedBy` relations, label group, bootstrap status update. The CHANGELOG-driven backfill produced the cleanest evidence trail of the three runs.
+
+**What shipped in Linear:** project `traces` (team Off-brand, `Tool` label), 3 milestones, 13 issues (OFF-68–OFF-80), label group + 4 module labels, 3 relations, 1 status update. Plus, same session on visual-cursor (revisit): OFF-62–OFF-67 (1 Done security backfill, 1 In Progress CI, 4 launch-readiness items incl. a QA matrix), 3 more relations.
 
 ### 3. "Visual cursor" (visual-cursor) — fresh bootstrap, `Tool`, small-project edge case
 
