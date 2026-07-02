@@ -179,7 +179,7 @@ Two different audiences, two different channels — don't conflate them:
 - **How (validated, fully automatable):** `prepare_attachment_upload` (issue + filename + contentType + size) → direct PUT of raw bytes to the signed URL → `create_attachment_from_upload` (assetUrl → issue). No manual step. A `create_attachment` (base64) fallback exists for very small files but burns context — prefer the PUT flow.
 - **Where:** attach directly to the issue that represents the shipped feature or campaign beat. Linear should be self-sufficient evidence — it shouldn't require cross-referencing another system (like a separate progress log) to see what a "Done" issue actually looked like.
 
-*(Not yet end-to-end tested in a live session — flagged in §14 as a pre-packaging validation item.)*
+*(End-to-end validated 2026-07-02 on a real issue (traces OFF-79, a 317KB PNG): `prepare_attachment_upload` → `curl` PUT of raw bytes with the signed headers verbatim → `create_attachment_from_upload`. Two practical notes: the signed URL expires in 60 seconds, so prepare → PUT → finalize one file at a time, never batch prepares; and the exact-size `x-goog-content-length-range` header means you need the true byte size before preparing.)*
 
 ---
 
@@ -228,15 +228,15 @@ For someone running many concurrent projects in one Linear workspace:
 
 ## 14. Open gaps — validate before packaging
 
-- [ ] End-to-end test the attachment flow (§10) on a real issue with a real screenshot.
-- [ ] Create a test Initiative in Linear's UI and validate the attach-by-name flow from the API side (`save_project`'s `addInitiatives`, `save_document`'s `initiative` param, `save_status_update`'s `initiative` param) — confirm this is actually the right multi-project sequencing/rollup mechanism before recommending it (§12).
-- [ ] Decide whether the default label taxonomy (Product/Tool/Drop/Marketing) is genuinely generalizable or was shaped by Obi's specific portfolio — probably needs to ship as a *suggested starting set*, not a hardcoded default.
-- [x] ~~Decide how the skill detects "already tracked, extend it" vs. "bootstrap fresh"~~ — resolved in §1a (2026-07-03). **Not yet dogfood-validated** — the first planned test run (see `TEST-PLAN.md`) exercises this exact path against a project with real, known existing Linear state.
-- [ ] Decide whether the manifesto-writing sub-flow (§1) is a separate prerequisite skill, or embedded questions this skill asks inline when no North Star doc is found.
-- [ ] Stress-test the granularity choice (§4) — is feature-level really the right default, or should the skill infer a default from project size instead of always asking?
-- [ ] Decide the concrete trigger mechanics for drift audits (§6) — purely agent-suggested at milestone close, or backed by an actual scheduled reminder?
-- [ ] Decide default structure/naming for "Launch Readiness" milestones (§7) — one milestone or several (assets vs. infra vs. store submission as separate items)?
-- [ ] Decide how proactive at-risk flagging (§9) actually reaches the user — next-session chat message, or something closer to real-time (a scheduled check)?
+- [x] ~~End-to-end test the attachment flow (§10)~~ — **resolved 2026-07-02**: validated on a real issue (traces OFF-79) with a real 317KB PNG; §10 updated with the two practical caveats (60-second signed-URL expiry → never batch prepares; exact byte size required upfront).
+- [ ] Create a test Initiative in Linear's UI and validate the attach-by-name flow from the API side — **deferred, now actionable**: still blocked on the one manual UI click (§11), but the workspace now has three genuinely related projects (Obi, visual-cursor, traces — all heading toward launches), so a real Initiative is worth creating rather than a throwaway test one. Waiting on the owner to create it; the API attach-side validation happens immediately after.
+- [x] ~~Decide whether the default label taxonomy (Product/Tool/Drop/Marketing) is generalizable~~ — **resolved 2026-07-02 as "ship as a suggested starting set, not a hardcoded default."** Three dogfood projects all fit cleanly (`Product` ×1, `Tool` ×2), but `Drop`/`Marketing` were never exercised, so the set is validated only where the owner's portfolio exercised it — exactly why it ships as a suggestion.
+- [x] ~~Decide how the skill detects "already tracked, extend it" vs. "bootstrap fresh"~~ — resolved in §1a (2026-07-03), **dogfood-validated 2026-07-02 on Obi** (Target 1): detection worked without being told the project name, zero duplicates created, and the run surfaced two §1a/§4 refinements (multi-track blind spot; doc-claims-as-evidence) now folded in.
+- [x] ~~Decide whether the manifesto-writing sub-flow (§1) is a separate skill or inline questions~~ — **resolved 2026-07-02: inline questions, no separate skill.** Both fresh-bootstrap runs never needed the writing exercise at all — a good README was accepted as the North Star both times, making README-as-North-Star the *common* case and the anchoring questions the fallback. A separate prerequisite skill would over-weight the rare path.
+- [x] ~~Stress-test the granularity choice (§4)~~ — **resolved 2026-07-02: feature-level default confirmed; keep asking anyway.** Asked explicitly on both fresh bootstraps; the owner chose feature-level both times, even for a 4-file package, and the question cost one exchange. No size-inferred default needed — the question is cheaper than the inference being wrong.
+- [ ] Decide the concrete trigger mechanics for drift audits (§6) — **deferred with reason**: no milestone closed during any dogfood run, so the trigger was never exercisable. Revisit when a real phase completes (Obi's Phase 3 tail is the nearest candidate).
+- [x] ~~Decide default structure/naming for "Launch Readiness" milestones (§7)~~ — **resolved 2026-07-02: one milestone by default; split only when sub-tracks have genuinely different dates/owners.** Both Tool runs fit everything in a single readiness milestone (named for what readiness means there — "Launch readiness" / "Distribution readiness"); Obi's 9-milestone rollout shows the split end of the spectrum. The §1b-question-5 answer, not a template, decides which end applies.
+- [ ] Decide how proactive at-risk flagging (§9) actually reaches the user — **deferred with reason**: no dogfood project has target dates yet (all three correctly declined to fabricate them), so there's nothing to flag against. Becomes testable the moment a real date lands on a milestone.
 
 ---
 
