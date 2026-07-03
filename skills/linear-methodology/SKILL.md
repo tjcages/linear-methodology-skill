@@ -75,4 +75,4 @@ Status updates at real milestone moments only — phase completions and health c
 
 ## What good output looks like
 
-A project a stranger can read: backfilled `Done` history proving what shipped (with evidence in every description), open work in dated-or-undated milestones matching the real plan, dependencies visible in relations rather than tribal knowledge, and a repo whose own CLAUDE.md keeps every future session honest. See [DOGFOOD-LOG.md](./DOGFOOD-LOG.md) for three real before/afters.
+A project a stranger can read: backfilled `Done` history proving what shipped (with evidence in every description), open work in dated-or-undated milestones matching the real plan, dependencies visible in relations rather than tribal knowledge, and a repo whose own CLAUDE.md keeps every future session honest. See the [dogfood log](https://github.com/tjcages/linear-methodology-skill/blob/main/DOGFOOD-LOG.md) for real before/afters.

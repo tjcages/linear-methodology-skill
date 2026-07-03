@@ -1,0 +1,6 @@
+{
+  "name": "linear-methodology",
+  "description": "Set up and maintain Linear project tracking well — a methodology, not an API wrapper. North Star anchoring, evidence-backed backfill, honest dates.",
+  "version": "1.0.0",
+  "author": { "name": "tjcages" }
+}

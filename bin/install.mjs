@@ -10,11 +10,16 @@ import { fileURLToPath } from "node:url";
 const pkgRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const dest = join(homedir(), ".claude", "skills", "linear-methodology");
 
-const FILES = ["SKILL.md", "METHODOLOGY.md", "README.md", "LICENSE"];
+const FILES = [
+  ["skills/linear-methodology/SKILL.md", "SKILL.md"],
+  ["skills/linear-methodology/METHODOLOGY.md", "METHODOLOGY.md"],
+  ["README.md", "README.md"],
+  ["LICENSE", "LICENSE"],
+];
 
-for (const f of FILES) {
-  if (!existsSync(join(pkgRoot, f))) {
-    console.error(`✗ ${f} missing from package — corrupt install, aborting.`);
+for (const [src] of FILES) {
+  if (!existsSync(join(pkgRoot, src))) {
+    console.error(`✗ ${src} missing from package — corrupt install, aborting.`);
     process.exit(1);
   }
 }
@@ -30,7 +35,7 @@ if (existsSync(dest)) {
 }
 
 mkdirSync(dest, { recursive: true });
-for (const f of FILES) cpSync(join(pkgRoot, f), join(dest, f));
+for (const [src, name] of FILES) cpSync(join(pkgRoot, src), join(dest, name));
 
 const version = JSON.parse(readFileSync(join(pkgRoot, "package.json"), "utf8")).version;
 console.log(`✓ linear-methodology ${version} installed → ${dest}`);

@@ -17,15 +17,24 @@ Extracted from a production rollout, then validated on three real projects — s
 
 ## Install
 
+**npx:**
+
 ```bash
 npx github:tjcages/linear-methodology-skill
 ```
 
-Or clone + symlink:
+**Or as a Claude Code plugin** (auto-updates via `/plugin marketplace update`):
+
+```
+/plugin marketplace add tjcages/linear-methodology-skill
+/plugin install linear-methodology@linear-methodology-skill
+```
+
+**Or clone + symlink** (always fresh via git pull):
 
 ```bash
 git clone https://github.com/tjcages/linear-methodology-skill
-ln -s "$(pwd)/linear-methodology-skill" ~/.claude/skills/linear-methodology
+ln -s "$(pwd)/linear-methodology-skill/skills/linear-methodology" ~/.claude/skills/linear-methodology
 ```
 
 Requires Claude Code with the Linear MCP connector authorized.
@@ -38,8 +47,8 @@ Also: backfilling history, extending an already-tracked project, reconciling sta
 
 ## Contents
 
-- [SKILL.md](./SKILL.md) — the agent-facing operating order
-- [METHODOLOGY.md](./METHODOLOGY.md) — the full methodology (16 sections)
+- [SKILL.md](./skills/linear-methodology/SKILL.md) — the agent-facing operating order
+- [METHODOLOGY.md](./skills/linear-methodology/METHODOLOGY.md) — the full methodology (16 sections)
 - [DOGFOOD-LOG.md](./DOGFOOD-LOG.md) — validation evidence
 
 ## License

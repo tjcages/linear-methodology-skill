@@ -22,8 +22,8 @@
   },
   "files": [
     "bin",
-    "SKILL.md",
-    "METHODOLOGY.md",
+    "skills",
+    ".claude-plugin",
     "README.md",
     "LICENSE"
   ],
