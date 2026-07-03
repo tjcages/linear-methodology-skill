@@ -35,7 +35,15 @@ Search Linear for an existing project (by repo name AND by asking the user). Nev
 
 Find the project constitution — manifesto, README-as-vision, strategy doc. **A good README usually is the North Star** (the common case); say your call out loud either way. Only if nothing qualifies and the project is substantial: ask the anchoring questions (§1, the 6) and write a lightweight doc. Never silently skip; never force a manifesto on a weekend script.
 
-**Question 5 is the structural keystone:** *what is the user trying to achieve by tracking this?* A launch goal produces launch-readiness + rollout tracks (§7/§8) even for a tiny tool; "durable record" produces backfill + backlog only. The answer — not project size or type — decides the shape.
+**Question 5 is the structural keystone:** *what is the user trying to achieve by tracking this?* The answer — not project size or type — decides the shape. Observed goal → shape mappings (5 real projects):
+
+| Goal | Shape |
+|---|---|
+| Ship + launch (pre-release) | backfill + launch-readiness + rollout, wired blockers |
+| Distribute/publish | same, with the channel decision flagged as the gate |
+| Already launched, announce it | backfill per release + one marketing milestone |
+| Durable record + roadmap | backfill + forward backlog only |
+| Active product roadmap | engineering-phase milestones + launch tracks (the full §3) |
 
 ### 3. Project type (§2)
 
@@ -47,7 +55,7 @@ Milestones = the roadmap's phases 1:1 — never invented. Separate timelines get
 
 ### 5. Backfill (§4 — the highest-value first pass)
 
-Run the algorithm: enumerate sources (roadmap doc, CHANGELOG, git log — CHANGELOG is the best when it exists) → extract per shipped *feature*, not per commit → `Done` only with evidence (a checkmark, a merged commit, a "shipped" note) → file into the right milestone preserving the source's own detail → cross-check that Done + backlog reconstructs the roadmap. Ask the granularity question explicitly (feature-level is the confirmed default). Two hard-won rules: a doc's own "done" claim is evidence, **not proof** — corroborate with the user before it overrides a live issue (§4 step 8); and scan for *other* roadmap docs beyond the known one (§4 step 7).
+Run the algorithm: enumerate sources (roadmap doc, CHANGELOG, git log — CHANGELOG is the best when it exists) → extract per shipped *feature*, not per commit → `Done` only with evidence (a checkmark, a merged commit, a "shipped" note) → file into the right milestone preserving the source's own detail → cross-check that Done + backlog reconstructs the roadmap. Ask the granularity question explicitly: **feature-level is the default; per-release is right for an already-launched package whose CHANGELOG carries the detail** (the changelog is the record; Linear points at it). Per-release backfill usually means module labels have nothing to filter — skip them. Two hard-won rules: a doc's own "done" claim is evidence, **not proof** — corroborate with the user before it overrides a live issue (§4 step 8); and scan for *other* roadmap docs beyond the known one (§4 step 7).
 
 ### Writing style — hard rules (apply to every write)
 

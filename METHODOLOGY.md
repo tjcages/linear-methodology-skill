@@ -204,6 +204,12 @@ This is the checklist to hand the user upfront: *"here's what you need to click 
 **Fully automatable via the MCP:**
 - Projects, Milestones, Issues, issue Labels (team-scoped, unlike project labels — **including label groups**, via `isGroup` + `parent`, §4), Documents, Status updates, Relations (`blocks`/`blockedBy`), Comments, **Attachments** (§10)
 
+**API practicalities (learned across 5 real bootstraps, 2026-07):**
+- `save_project`'s `icon` rejects most names with no discoverable allowlist — omit it; set icons in the UI.
+- Transient failures happen (Linear 502s, harness-side classifier blips) — retry the identical call once before rerouting.
+- Parallel `save_issue` calls get non-sequential numbers — cosmetic, but file order-sensitive backfills sequentially if numbering matters to you.
+- Initiatives are plan-gated and may be entirely absent from a workspace's UI — check before promising them (§12).
+
 The skill's setup flow should surface this split explicitly and early — tell the user the 4–5 things they need to click, then proceed to automate everything else, rather than discovering these gaps mid-task.
 
 ---
@@ -242,7 +248,7 @@ For someone running many concurrent projects in one Linear workspace:
 - [x] ~~Stress-test the granularity choice (§4)~~ — **resolved 2026-07-02: feature-level default confirmed; keep asking anyway.** Asked explicitly on both fresh bootstraps; the owner chose feature-level both times, even for a 4-file package, and the question cost one exchange. No size-inferred default needed — the question is cheaper than the inference being wrong.
 - [ ] Decide the concrete trigger mechanics for drift audits (§6) — **deferred with reason**: no milestone closed during any dogfood run, so the trigger was never exercisable. Revisit when a real phase completes (Obi's Phase 3 tail is the nearest candidate).
 - [x] ~~Decide default structure/naming for "Launch Readiness" milestones (§7)~~ — **resolved 2026-07-02: one milestone by default; split only when sub-tracks have genuinely different dates/owners.** Both Tool runs fit everything in a single readiness milestone (named for what readiness means there — "Launch readiness" / "Distribution readiness"); Obi's 9-milestone rollout shows the split end of the spectrum. The §1b-question-5 answer, not a template, decides which end applies.
-- [ ] Decide how proactive at-risk flagging (§9) actually reaches the user — **deferred with reason**: no dogfood project has target dates yet (all three correctly declined to fabricate them), so there's nothing to flag against. Becomes testable the moment a real date lands on a milestone.
+- [x] ~~Decide how proactive at-risk flagging (§9) actually reaches the user~~ — **resolved 2026-07-03, exercised live**: the mechanism is any session noticing date-vs-state divergence during normal work (no scheduler needed). traces' passed target → `offTrack` update + chat flag; the skill's due-today target → `atRisk` with the exact remaining items. The CLAUDE.md protocol is what guarantees a session looks.
 
 ---
 
