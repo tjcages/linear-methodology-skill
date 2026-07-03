@@ -17,7 +17,13 @@ Extracted from a production rollout, then validated on three real projects — s
 
 ## Install
 
-**npx:**
+**skills CLI** ([skills.sh](https://www.skills.sh)):
+
+```bash
+npx skills add tjcages/linear-methodology-skill
+```
+
+**npx (direct):**
 
 ```bash
 npx github:tjcages/linear-methodology-skill
