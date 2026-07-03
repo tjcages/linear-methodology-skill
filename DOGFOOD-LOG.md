@@ -95,3 +95,14 @@ Three targets queued, in order. Full detail (what each one is meant to stress-te
 ## Post-run feedback — 2026-07-02
 
 Owner reviewed the created issues: descriptions/comments **too verbose**. Root cause: the methodology said "preserve source detail" (§4.4) with no length ceiling, so preservation became prose. Fix: hard writing rules added to §4 (titles ≤8 words, descriptions ≤3 sentences/5 bullets, comments ≤3 lines, screenshot-over-description), mirrored in SKILL.md and all three repo CLAUDE.md protocols.
+
+### 4. shader-panel — first run through the packaged skill
+
+**Date:** 2026-07-03
+**Repo:** `~/Workspace/shader-panel` (moved from Desktop, renamed from shader-dev)
+**Project type:** `Tool` — already launched (npm v1.0.0)
+**Status:** run complete, via `Skill(linear-methodology)` — the installed skill, not the raw doc.
+
+**What worked:** SKILL.md's condensed flow was sufficient — no need to open METHODOLOGY.md. New meta-goal answer surfaced: "already launched, marketing push" → single `Marketing push` milestone, no readiness track. Per-release granularity chosen (first time) — 3 Done issues straight from CHANGELOG, module labels correctly skipped. Terse-writing rules applied throughout; hero.webp attached at bootstrap.
+
+**Friction:** none methodology-level. The skill's operating order held for a fourth project shape (launched-quietly, announce-later).
