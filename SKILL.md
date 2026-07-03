@@ -49,6 +49,10 @@ Milestones = the roadmap's phases 1:1 — never invented. Separate timelines get
 
 Run the algorithm: enumerate sources (roadmap doc, CHANGELOG, git log — CHANGELOG is the best when it exists) → extract per shipped *feature*, not per commit → `Done` only with evidence (a checkmark, a merged commit, a "shipped" note) → file into the right milestone preserving the source's own detail → cross-check that Done + backlog reconstructs the roadmap. Ask the granularity question explicitly (feature-level is the confirmed default). Two hard-won rules: a doc's own "done" claim is evidence, **not proof** — corroborate with the user before it overrides a live issue (§4 step 8); and scan for *other* roadmap docs beyond the known one (§4 step 7).
 
+### Writing style — hard rules (apply to every write)
+
+Titles ≤8 words. Descriptions ≤3 sentences or ≤5 bullets, evidence as one line. Comments ≤3 lines — link, don't recap. No narrative filler. Screenshot anything visual at the moment it exists and attach it (§10) — an image replaces paragraphs.
+
 ### 6. Wire it (§4, §10, §11)
 
 Real `blockedBy`/`blocks` for genuine sequencing (launch beats blocked by readiness items). Attach visual evidence to issues via the validated upload flow (§10 — 60s signed-URL expiry, one file at a time, exact byte size). Surface the manual-vs-API checklist (§11) early: Cycles, project labels, Initiatives, GitHub integration, and the OAuth grant are UI-only; everything else automates.

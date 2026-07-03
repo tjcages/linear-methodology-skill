@@ -89,3 +89,9 @@ Three targets queued, in order. Full detail (what each one is meant to stress-te
 **Comparison to the Obi reference (§15 step 4):** same recognizable shape at 1/10 the scale — backfilled `Done` history in a milestone, forward tracks with wired dependencies, labels, a bootstrap status update. Proportionality held: 3 milestones vs. 15, 11 issues vs. 39+, no Documents vs. 5.
 
 **What shipped in Linear:** project `visual-cursor` (team Off-brand, `Tool` label, lead ty), 3 milestones, 11 issues (OFF-51–OFF-61: 5 Done backfill + 4 launch-readiness + 2 rollout), 4 `blockedBy` relations, 1 label group + 3 module labels, 1 status update.
+
+---
+
+## Post-run feedback — 2026-07-02
+
+Owner reviewed the created issues: descriptions/comments **too verbose**. Root cause: the methodology said "preserve source detail" (§4.4) with no length ceiling, so preservation became prose. Fix: hard writing rules added to §4 (titles ≤8 words, descriptions ≤3 sentences/5 bullets, comments ≤3 lines, screenshot-over-description), mirrored in SKILL.md and all three repo CLAUDE.md protocols.
