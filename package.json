@@ -1,6 +1,6 @@
 {
   "name": "linear-methodology-skill",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Agent Skills pack for Linear project tracking — setup, sync, monitor, always-on discipline. Soft nudge for untracked repos; required Monitor Automation; ADHD-shaped chat.",
   "type": "module",
   "license": "MIT",

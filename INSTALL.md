@@ -1,53 +1,56 @@
 # Install — Linear tracking skill pack
 
-One pack. Cursor, Claude Code, Codex, and Agent Skills harnesses.
+**Goal:** one paste + one agent sentence. Manual fallback only if something fails.
 
-Journey: [JOURNEY.md](./JOURNEY.md). Locked: soft nudge (1B) · Monitor Automation required (2C).
+Journey: [JOURNEY.md](./JOURNEY.md) · Always-on text: [shared/ALWAYS_ON.md](./shared/ALWAYS_ON.md)
 
-## Install (all agents)
+---
+
+## Recommended (2 steps)
+
+### Step 1 — Install the skills (~30 sec)
 
 ```bash
 npx skills add tjcages/linear-methodology-skill -g -a '*' -y
 ```
 
-Targeted:
+This installs `linear-setup`, `linear-sync`, `linear-monitor`, `linear-discipline`, `linear-finish-install` (and the legacy alias).
 
-```bash
-npx skills add tjcages/linear-methodology-skill -g -a cursor -a claude-code -a codex -y
+`npx github:tjcages/linear-methodology-skill` also **auto-writes** the always-on block into:
+
+- `~/.claude/CLAUDE.md`
+- `~/.codex/AGENTS.md`
+- `~/.agents/AGENTS.md`
+
+(Cursor User Rules live in the app — Step 2 handles them.)
+
+### Step 2 — Finish in the agent (~2 min)
+
+In **Cursor Agent** chat, say exactly:
+
+```text
+finish linear-tracking install
 ```
 
-Or: `npx github:tjcages/linear-methodology-skill` (copies into common skill dirs).
+The `linear-finish-install` skill will:
 
-## Always-on snippet (required)
+1. Add the Cursor **User Rule** `linear-tracking (always-on)` automatically  
+2. Probe Linear MCP auth  
+3. Open the [Automations](https://cursor.com/automations) editor so you can save **Linear tracking health** (weekly)
 
-Paste into the agent’s persistent rules. Without this, `linear-discipline` will not load every session.
+If Linear is not connected yet, follow the links it prints (or [AUTH.md](./shared/AUTH.md)).
 
-**Cursor** — Settings → Rules → User Rules (or a user rule with always-apply):
+---
 
-```markdown
-## Linear tracking
+## What you may still click (only if prompted)
 
-Follow the `linear-discipline` skill every session: if this repo has a Linear tracking protocol, enforce it (search-before-create, lifecycle, close the loop). If it does not and `.linear-tracking-skip` is absent, ask once to run linear-setup. Linear chat follows the pack’s RESPONSE.md (action-first, numbered steps, no preamble). Authorize Linear MCP before any Linear calls (AUTH.md).
-```
+| Need | Where |
+|------|--------|
+| Linear OAuth | [Cursor Settings → MCP](https://cursor.com/settings) · [Linear MCP docs](https://linear.app/docs/mcp) · Claude: `/mcp` or [claude.ai settings](https://claude.ai/settings) |
+| Save/enable Automation | [Cursor Automations](https://cursor.com/automations) — recipe in [AUTOMATION.md](./shared/AUTOMATION.md) |
+| Manual User Rules (if agent can’t write them) | [Cursor Settings → Rules](https://cursor.com/settings) → User Rules → paste [ALWAYS_ON.md](./shared/ALWAYS_ON.md) |
 
-**Claude Code** — add the same block to `~/.claude/CLAUDE.md`.
-
-**Codex** — add the same block to `~/.codex/AGENTS.md` or `~/.agents/AGENTS.md`.
-
-## Authorize Linear MCP (required)
-
-See [shared/AUTH.md](./shared/AUTH.md). Probe must succeed before setup/sync/monitor.
-
-## Create Monitor Automation (required — 2C)
-
-Install is incomplete until this exists.
-
-1. Open Cursor Agent chat.
-2. Run `/automate` (create a Cursor Automation).
-3. Use the recipe in [shared/AUTOMATION.md](./shared/AUTOMATION.md).
-4. Confirm it appears enabled in Automations.
-
-Non-Cursor: schedule `/linear-monitor` yourself; Cursor Automation is the required continuous path.
+---
 
 ## Verify
 
@@ -55,28 +58,25 @@ Non-Cursor: schedule `/linear-monitor` yourself; Cursor Automation is the requir
 npx skills list -g
 ```
 
-Confirm: `linear-setup`, `linear-sync`, `linear-monitor`, `linear-discipline` (and optional alias `linear-methodology`).
+You should see: `linear-setup`, `linear-sync`, `linear-monitor`, `linear-discipline`, `linear-finish-install`.
 
 Checklist:
 
-1. Always-on snippet pasted
+1. Always-on present (Cursor User Rule **or** CLAUDE.md / AGENTS.md block)
 2. Linear MCP lists teams
-3. Monitor Automation enabled
+3. Monitor Automation enabled in [Automations](https://cursor.com/automations)
 4. Untracked repo → at most one nudge
 
-## Update
+---
+
+## Update / uninstall
 
 ```bash
 npx skills update -g
+npx skills remove linear-setup linear-sync linear-monitor linear-discipline linear-finish-install linear-methodology -g -y
 ```
 
-## Uninstall
-
-```bash
-npx skills remove linear-setup linear-sync linear-monitor linear-discipline linear-methodology -g -y
-```
-
-Remove the always-on snippet and disable the Automation.
+Remove the User Rule / ALWAYS_ON markers and disable the Automation.
 
 ## Claude Code plugin (optional)
 
@@ -85,14 +85,13 @@ Remove the always-on snippet and disable the Automation.
 /plugin install linear-methodology@linear-methodology-skill
 ```
 
-Still complete always-on + auth + Automation.
+Still run Step 2 (or ensure `~/.claude/CLAUDE.md` has the always-on block + Linear auth).
 
 ## Troubleshooting
 
 | Symptom | Fix |
 |---------|-----|
-| No soft nudge | Paste always-on snippet; new chat |
-| Auth errors | AUTH.md for your agent; new chat after OAuth |
-| Automation missing | AUTOMATION.md + `/automate` |
-| Old single skill only | Re-run `skills add -g -a '*' -y` for the full pack |
-| Eve / PromptScript | No global install — use project-level `npx skills add` without `-g` |
+| No soft nudge | Say `finish linear-tracking install`, or paste [ALWAYS_ON.md](./shared/ALWAYS_ON.md) into [User Rules](https://cursor.com/settings) |
+| Auth errors | [AUTH.md](./shared/AUTH.md) + [Linear MCP](https://linear.app/docs/mcp) |
+| Automation missing | [AUTOMATION.md](./shared/AUTOMATION.md) → [Automations](https://cursor.com/automations) |
+| Eve / PromptScript | No global install — `npx skills add` **without** `-g` in the project |

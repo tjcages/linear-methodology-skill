@@ -5,12 +5,13 @@ Locked decisions: **1B** soft nudge · **2C** Monitor Automation required.
 ## One-paste path (stranger → ready)
 
 1. Run `npx skills add tjcages/linear-methodology-skill -g -a '*' -y`
-2. Paste the **always-on** snippet (see [INSTALL.md](./INSTALL.md)) into Cursor User Rules / `~/.claude/CLAUDE.md` / `~/.codex/AGENTS.md`
-3. Authorize Linear MCP (Step 0 — [AUTH.md](./shared/AUTH.md))
-4. Create the **required** Monitor Automation ([AUTOMATION.md](./shared/AUTOMATION.md)) via Cursor `/automate`
-5. Open any repo — discipline runs if tracked; soft nudge once if not
+2. In Cursor Agent chat: `finish linear-tracking install`  
+   → writes always-on (Cursor User Rule + file snippets), probes Linear auth, opens [Automations](https://cursor.com/automations)
+3. Complete any prompted OAuth / save the Monitor Automation
 
-Install is **incomplete** until steps 2–4 are done.
+`npx github:…` installer also auto-writes always-on into Claude/Codex `CLAUDE.md` / `AGENTS.md`. Cursor User Rules require Step 2 (app API, not the CLI).
+
+Install is **incomplete** until always-on + Linear auth + Monitor Automation are done.
 
 ## Skills
 

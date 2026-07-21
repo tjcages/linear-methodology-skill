@@ -2,6 +2,14 @@
 
 Methodology changelog. Terse, newest first. The methodology's own §15 self-dogfooding discipline drives what lands here — see [DOGFOOD-LOG.md](./DOGFOOD-LOG.md).
 
+## v1.2.1 — 2026-07-21
+
+Always-on automation + clearer install path.
+
+**Added:** `linear-finish-install` skill (writes Cursor User Rule via agent, probes auth, opens Automations). `shared/ALWAYS_ON.md`. Installer auto-upserts always-on into `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.agents/AGENTS.md`.
+
+**Changed:** INSTALL/README → **2 steps** (skills add → “finish linear-tracking install”) with hyperlinks for MCP / Automations / Settings.
+
 ## v1.2.0 — 2026-07-21
 
 Journey redesign (1B soft nudge · 2C required Monitor Automation).
