@@ -1,6 +1,6 @@
 ---
 name: linear-methodology
-version: 1.1.0
+version: 1.1.1
 description: >-
   Set up and maintain Linear project tracking the right way — a methodology,
   not an API wrapper. Use whenever: the user asks to "set up Linear tracking",
@@ -12,8 +12,9 @@ description: >-
   reality. Anchors every milestone/issue to the project's own North Star doc,
   backfills real shipped history as Done issues with evidence, wires real
   blockedBy/blocks dependencies, sets dates only with a real signal, and
-  installs the per-session tracking discipline into the repo's CLAUDE.md. NOT
-  for one-off Linear CRUD (creating a single issue, commenting) — the Linear
+  installs the per-session tracking discipline into the repo's always-loaded
+  agent instructions (CLAUDE.md, AGENTS.md, or .cursor/rules/). NOT for
+  one-off Linear CRUD (creating a single issue, commenting) — the Linear
   MCP handles that directly.
 ---
 
@@ -68,7 +69,7 @@ Real `blockedBy`/`blocks` for genuine sequencing (launch beats blocked by readin
 
 ### 7. Install the discipline (§5 — bootstrap is not done without this)
 
-Write the tracking protocol into the repo's `CLAUDE.md` with the actual team/project/milestone/label names filled in: search-before-create, non-trivial-work-gets-an-issue, every-issue-gets-a-milestone, Backlog→In Progress→Done lifecycle (never skip to Done), close-the-loop-before-session-end, Linear's generated branch names. Without this, tracking goes stale the first time a different session ships work.
+Write the tracking protocol into the repo's **always-loaded agent instructions** with the actual team/project/milestone/label names filled in: search-before-create, non-trivial-work-gets-an-issue, every-issue-gets-a-milestone, Backlog→In Progress→Done lifecycle (never skip to Done), close-the-loop-before-session-end, Linear's generated branch names. Pick the file(s) this repo's agents actually read — `CLAUDE.md` (Claude Code), `AGENTS.md` (Codex / many agents), and/or `.cursor/rules/` (Cursor). Mirror the same protocol across whichever are in use; don't invent a new home. Without this, tracking goes stale the first time a different session ships work.
 
 ### 8. Keep it honest (§6, §9)
 
@@ -80,4 +81,4 @@ Setup isn't "done" by vibe. Score the §18 rubric (10 dimensions × 0–2; **pas
 
 ## What good output looks like
 
-A project a stranger can read: backfilled `Done` history proving what shipped (with evidence in every description), open work in dated-or-undated milestones matching the real plan, dependencies visible in relations rather than tribal knowledge, and a repo whose own CLAUDE.md keeps every future session honest. It scores ≥16/20 on the §18 rubric with no live §19 anti-patterns. See [EXAMPLES.md](./EXAMPLES.md) for worked before/afters (including a messy project fixed step by step), and the [dogfood log](https://github.com/tjcages/linear-methodology-skill/blob/main/DOGFOOD-LOG.md) for the real runs behind them.
+A project a stranger can read: backfilled `Done` history proving what shipped (with evidence in every description), open work in dated-or-undated milestones matching the real plan, dependencies visible in relations rather than tribal knowledge, and a repo whose always-loaded agent instructions keep every future session honest. It scores ≥16/20 on the §18 rubric with no live §19 anti-patterns. See [EXAMPLES.md](./EXAMPLES.md) for worked before/afters (including a messy project fixed step by step), and the [dogfood log](https://github.com/tjcages/linear-methodology-skill/blob/main/DOGFOOD-LOG.md) for the real runs behind them.

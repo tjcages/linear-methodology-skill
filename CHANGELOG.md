@@ -2,6 +2,17 @@
 
 Methodology changelog. Terse, newest first. The methodology's own §15 self-dogfooding discipline drives what lands here — see [DOGFOOD-LOG.md](./DOGFOOD-LOG.md).
 
+## v1.1.1 — 2026-07-21
+
+Universal Agent Skills packaging pass — same methodology, installable on Cursor / Claude Code / Codex (and other skills.sh agents).
+
+**Changed:**
+- README + `package.json` reframed as an Agent Skill (not Claude-only); skills CLI `-a '*'` is the recommended install.
+- `bin/install.mjs` copies into `~/.claude`, `~/.cursor`, `~/.codex`, and `~/.agents` skill dirs; includes `EXAMPLES.md`.
+- SKILL.md / METHODOLOGY.md / EXAMPLES.md: §5 discipline installs into always-loaded agent instructions (`CLAUDE.md`, `AGENTS.md`, and/or `.cursor/rules/`), not CLAUDE.md alone.
+
+**What existing users should update:** re-install via `npx skills add tjcages/linear-methodology-skill -g -a '*' -y` (or re-run the npx installer). Existing Linear setups stay valid.
+
 ## v1.1.0 — 2026-07-21
 
 The operationalization round-out: from "good practice" to a repeatable system with guardrails.

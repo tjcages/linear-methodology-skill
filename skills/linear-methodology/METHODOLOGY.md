@@ -1,6 +1,6 @@
-# Linear Tracking Methodology (working draft — pre-packaging)
+# Linear Tracking Methodology
 
-**Version:** 1.1.0 — see [CHANGELOG.md](../../CHANGELOG.md)
+**Version:** 1.1.1 — see [CHANGELOG.md](../../CHANGELOG.md)
 
 > **What this is.** A draft of the methodology behind how Claude should set up and maintain Linear tracking for a software project — built by doing it for real on Obi (the Socials app), then generalized. This is **not yet a packaged skill.** Status (2026-07-03): methodology fully drafted, now in the **dogfood-testing phase** (§15) across the owner's other real projects. Packaging/distribution strategy is still deliberately held (§16) until testing is done.
 >
@@ -131,7 +131,7 @@ Ask this once, at setup, alongside the North Star doc. It maps directly onto the
 - Never leave active work sitting in `Backlog`.
 - A session that starts something and can't finish it leaves the issue `In Progress` with a comment on what's left — never silently reverts it to `Backlog`.
 - **Close the loop before ending a session.** If Linear-tracked work happened, the issue gets updated (state and/or comment) before the session ends. A session that ships something but leaves Linear stale is not done — this is the Linear-equivalent of a visual progress-log discipline, and the two should be thought of as one unit of "did the work AND recorded the work."
-- **Bootstrap isn't done until the discipline is installed where future agents will actually read it.** The setup session knows these rules; the next session won't unless they're written into the repo's own always-loaded context (`CLAUDE.md` or equivalent) — the reference implementation did this (a "Linear tracking (non-negotiable)" section in CLAUDE.md, mirrored as a Linear Document). Without it, tracking goes stale the moment a different session ships work — observed on the visual-cursor dogfood run (2026-07-02), where new commits and WIP appeared within the hour of bootstrap from parallel sessions that had no tracking rule to follow, and the human had to notice and ask for a re-scan. Wiring the ruleset into the repo is a first-class bootstrap step, not a nice-to-have — with the team/project names, label set, and milestone scheme filled in per project.
+- **Bootstrap isn't done until the discipline is installed where future agents will actually read it.** The setup session knows these rules; the next session won't unless they're written into the repo's own always-loaded context — `CLAUDE.md` (Claude Code), `AGENTS.md` (Codex / many agents), `.cursor/rules/` (Cursor), or whichever file(s) this repo's agents load. The reference implementation used a "Linear tracking (non-negotiable)" section in CLAUDE.md, mirrored as a Linear Document. Without it, tracking goes stale the moment a different session ships work — observed on the visual-cursor dogfood run (2026-07-02), where new commits and WIP appeared within the hour of bootstrap from parallel sessions that had no tracking rule to follow, and the human had to notice and ask for a re-scan. Wiring the ruleset into the repo is a first-class bootstrap step, not a nice-to-have — with the team/project names, label set, and milestone scheme filled in per project.
 
 ---
 
@@ -316,7 +316,7 @@ A scoreable check for "is setup actually done?" — not a vibe. Score each dimen
 | 6 | Lifecycle honored | States match reality, no perpetual-in-progress (§5) |
 | 7 | Dependencies wired | Real `blockedBy`/`blocks` on the critical path (§4) |
 | 8 | Launch/exit plan present (if launch goal) | Readiness track + defined "done" (§7); N/A → score 2 |
-| 9 | Discipline installed in CLAUDE.md | Protocol written where future sessions read it (§5) |
+| 9 | Discipline installed in agent instructions | Protocol written where future sessions read it — `CLAUDE.md` / `AGENTS.md` / `.cursor/rules/` (§5) |
 | 10 | No live anti-patterns | Clean against the §19 list |
 
 **Threshold:** **≥16/20 and no dimension at 0** = done. **12–15** = functional but soft, name the gaps. **<12** = not set up, keep going. Dimensions 1–6 are load-bearing — a 0 on any of them fails the pass regardless of total. Run this via the §26 self-audit.
@@ -368,7 +368,7 @@ Three flows for projects that aren't clean bootstraps. All obey §1a (confirm be
 1. Enumerate everything (§1a step 1); summarize the current organization back to the user.
 2. Score it with the §18 rubric to name the gaps concretely.
 3. Get explicit per-category consent (§1a step 3) — reorganizing is higher-risk than extending.
-4. Fix in order: assign orphan issues to milestones → collapse milestone spam to 3–6 (§23) → wire missing dependencies → install the CLAUDE.md discipline (§5).
+4. Fix in order: assign orphan issues to milestones → collapse milestone spam to 3–6 (§23) → wire missing dependencies → install the agent-instructions discipline (§5).
 5. Post one status update recording the cleanup; don't touch off-limits/other-owned issues.
 
 **(b) Half-tracked project** (some tracked, a whole initiative missing — the Obi native-editor case, §4.7):

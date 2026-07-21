@@ -15,7 +15,7 @@ Grounded transformations showing what the methodology changes in practice. Each 
 
 **Before:** "tracking's set up" meant *some milestones exist*. No way to say whether it was actually complete.
 
-**After:** score the §18 rubric — orphan issues (dim #4) and no CLAUDE.md discipline (dim #9) came back at 0, total 13/20 = SOFT. The gaps were named, not guessed.
+**After:** score the §18 rubric — orphan issues (dim #4) and no agent-instructions discipline (dim #9) came back at 0, total 13/20 = SOFT. The gaps were named, not guessed.
 → §18 (rubric), §26 (the audit that produces the score).
 
 ## 3. Project type predicted the wrong structure → the goal did (§7, §17)
@@ -57,7 +57,7 @@ Grounded transformations showing what the methodology changes in practice. Each 
 - 4 issues sitting `In Progress` for three weeks; two were actually shipped, one abandoned.
 - Every issue body **re-types the roadmap** from `docs/plan.md`.
 - 3 target dates, none with an estimate behind them.
-- No CLAUDE.md tracking protocol — which is *why* it decayed.
+- No always-loaded tracking protocol (`CLAUDE.md` / `AGENTS.md` / rules) — which is *why* it decayed.
 
 **Step 1 — audit, don't touch (§26).** Enumerate everything, score the §18 rubric: orphans (#4=0), lifecycle rot (#6=0), no discipline (#9=0), anti-patterns live (#10=0). Total 8/20 = **FAIL**. Emit the gap list. Get consent before writing (§1a).
 
@@ -73,6 +73,6 @@ Grounded transformations showing what the methodology changes in practice. Each 
 
 **Step 7 — wire dependencies (§4).** `Launch readiness` beats `blockedBy` the `1.0 stability` items that gate them. The critical path lives in Linear, not someone's head.
 
-**Step 8 — install the discipline (§5).** Write the tracking protocol into `widget-cli/CLAUDE.md` with real team/project/milestone/label names — so the next session can't re-rot it.
+**Step 8 — install the discipline (§5).** Write the tracking protocol into the repo's always-loaded agent instructions (`widget-cli/CLAUDE.md`, and `AGENTS.md` / `.cursor/rules/` if those agents are in play) with real team/project/milestone/label names — so the next session can't re-rot it.
 
 **Step 9 — re-score (§18/§26).** Rubric back to 17/20 = **PASS**. Post one status update recording the cleanup (§20). Done means the score says so.

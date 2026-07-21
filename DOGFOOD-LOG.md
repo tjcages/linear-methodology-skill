@@ -118,3 +118,17 @@ Owner reviewed the created issues: descriptions/comments **too verbose**. Root c
 **What changed:** added §17–§26 (Extended guidance band) — a project-shape decision tree (§17), a scoreable readiness rubric (§18, threshold ≥16/20), anti-patterns table (§19), cadence rules (§20), maintenance-mode (§21), migration/rescue playbooks (§22), milestone-design (§23), issue taxonomy (§24), compatibility matrix (§25), and a runnable self-audit (§26) that outputs a gap list. Added EXAMPLES.md (before/afters grounded in these runs + one messy project fixed step by step) and CHANGELOG.md (v1.0.0 / v1.1.0). SKILL.md, README.md, and this log updated to surface the new material. No §0–§16 meaning changed — the round-out sits on top of a validated core, sourced from the friction and judgment calls these 5 runs already recorded (label groups, doc-claims-as-evidence, meta-goal-over-type, untracked-second-track).
 
 **Tracked as:** OFF-196 → OFF-207 in linear-methodology-skill (milestone `Package & launch`).
+
+---
+
+## Packaging — universal Agent Skills — 2026-07-21
+
+**Not a project run** — packaging dogfood on the skill itself (§15 applied to distribution).
+
+**What broke:** the artifact was already Agent Skills–shaped (`skills/linear-methodology/SKILL.md`), but distribution and §5 language were Claude-only — `install.mjs` wrote solely to `~/.claude/skills/`, README called it a Claude Code skill, and the discipline step hardcoded `CLAUDE.md`. Cursor/Codex users had to invent their own install path; multi-agent repos got a protocol only one agent would load.
+
+**What changed (v1.1.1):** skills CLI (`npx skills add … -g -a '*'`) is the recommended universal install; `install.mjs` now copies into Claude / Cursor / Codex / `.agents` skill dirs and ships `EXAMPLES.md`; §5 + SKILL.md + EXAMPLES name `CLAUDE.md` / `AGENTS.md` / `.cursor/rules/` as the always-loaded homes. No methodology meaning change beyond that portability.
+
+**Install exercised this session:** `npx skills add <local-repo> -g -a '*' -y` → canonical at `~/.agents/skills/linear-methodology` (v1.1.1), discovered by Cursor / Claude Code / Codex + ~70 other agents. Eve and PromptScript skipped (no global skill install).
+
+**Tracked as:** [OFF-208](https://linear.app/off-brand-studio/issue/OFF-208/universal-agent-skills-packaging) (milestone `Package & launch`; related OFF-88 / OFF-89 / OFF-113).
