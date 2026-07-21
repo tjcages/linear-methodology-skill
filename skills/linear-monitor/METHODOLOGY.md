@@ -1,12 +1,12 @@
 # Linear Tracking Methodology
 
-**Version:** 1.2.0 — see [CHANGELOG.md](../../CHANGELOG.md)
+**Version:** 1.0.0 — see [CHANGELOG.md](../../CHANGELOG.md)
 
-> **What this is.** A draft of the methodology behind how Claude should set up and maintain Linear tracking for a software project — built by doing it for real on Obi (the Socials app), then generalized. This is **not yet a packaged skill.** Status (2026-07-03): methodology fully drafted, now in the **dogfood-testing phase** (§15) across the owner's other real projects. Packaging/distribution strategy is still deliberately held (§16) until testing is done.
+> **What this is.** The methodology behind how an AI agent should set up and maintain Linear tracking for a software project — validated on multiple real builds, then packaged as Agent Skills. This is the source doc the skills follow.
 >
-> **The differentiator.** Existing community Linear skills (`linear-claude-skill`, `linear-cli-skill`) teach Claude *how to call Linear* — CRUD wrappers, auth, GraphQL fallbacks. That's solved; Claude Code's own Linear MCP already does it. What's missing from the ecosystem is *how to track a project well* — the methodology, not the mechanics. This doc is that methodology.
+> **The differentiator.** Most Linear skills teach an agent *how to call Linear* — CRUD wrappers, auth, GraphQL. Linear MCP already does that. What's missing is *how to track a project well* — the methodology, not the mechanics.
 >
-> **Target user.** Someone running many concurrent projects (the owner's own description), who wants each one properly tracked without personally designing the tracking scheme every time, and without the tracking decaying into busywork disconnected from why the project exists.
+> **Target user.** Someone running concurrent projects who wants each one properly tracked without designing the scheme from scratch every time, and without tracking decaying into busywork disconnected from why the project exists.
 
 ---
 

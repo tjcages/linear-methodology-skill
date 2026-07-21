@@ -1,6 +1,6 @@
 ---
 name: linear-sync
-version: 1.2.0
+version: 1.0.0
 description: >-
   Sync, audit, or rescue an existing Linear project against repo reality. Use
   when the user asks to sync Linear, reconcile tracking, audit this project,

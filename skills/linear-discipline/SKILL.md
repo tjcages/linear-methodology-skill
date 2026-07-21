@@ -1,6 +1,6 @@
 ---
 name: linear-discipline
-version: 1.2.0
+version: 1.0.0
 description: >-
   Always-on Linear session discipline and one-time soft nudge for untracked
   repos. Use whenever non-trivial work is happening in a repo that already has

@@ -1,6 +1,6 @@
 ---
 name: linear-setup
-version: 1.2.0
+version: 1.0.0
 description: >-
   Bootstrap or extend Linear project tracking the right way — methodology, not
   API CRUD. Use when the user asks to set up Linear tracking, track this project

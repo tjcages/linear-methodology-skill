@@ -109,7 +109,7 @@ for (const file of ALWAYS_ON_FILES) {
 }
 
 const version = JSON.parse(readFileSync(join(pkgRoot, "package.json"), "utf8")).version;
-console.log(`\n✓ linear-tracking pack ${version} → ${ok} skill installs across ${DEST_ROOTS.length} roots`);
+console.log(`\n✓ linear-methodology ${version} → ${ok} skill installs across ${DEST_ROOTS.length} roots`);
 console.log(`  Skills: ${SKILL_NAMES.join(", ")}`);
 console.log(`\nCursor User Rules cannot be written from this CLI.`);
 console.log(`Next (one sentence in Cursor Agent chat):`);

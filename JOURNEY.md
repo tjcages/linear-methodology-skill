@@ -65,4 +65,4 @@ open repo → protocol present? → yes → discipline (file issues, close loop)
 
 ## Version
 
-Journey ships in **v1.2.0**. See [CHANGELOG.md](./CHANGELOG.md).
+Journey ships in **v1.0.0**. See [CHANGELOG.md](./CHANGELOG.md).

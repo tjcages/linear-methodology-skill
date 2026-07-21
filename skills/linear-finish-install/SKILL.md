@@ -1,6 +1,6 @@
 ---
 name: linear-finish-install
-version: 1.2.1
+version: 1.0.0
 description: >-
   Finish Linear tracking pack install after skills are present: write always-on
   rules, verify Linear MCP auth, open the Monitor Automation draft. Use when the
