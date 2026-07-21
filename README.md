@@ -4,7 +4,7 @@
 
 The Linear MCP already handles the mechanics (issues, milestones, CRUD). This skill adds what's missing: the methodology. Structure derived from the project's own North Star doc, real shipped history backfilled with evidence, real dependencies wired, dates that mean something.
 
-Extracted from a production rollout, then validated on three real projects — see [DOGFOOD-LOG.md](./DOGFOOD-LOG.md) for what worked and what broke.
+Extracted from a production rollout, then validated across five real runs — see [DOGFOOD-LOG.md](./DOGFOOD-LOG.md) for what worked and what broke.
 
 ## What it does
 
