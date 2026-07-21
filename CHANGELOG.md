@@ -8,7 +8,7 @@ Always-on automation + clearer install path.
 
 **Added:** `linear-finish-install` skill (writes Cursor User Rule via agent, probes auth, opens Automations). `shared/ALWAYS_ON.md`. Installer auto-upserts always-on into `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.agents/AGENTS.md`.
 
-**Changed:** INSTALL/README → **2 steps** (skills add → “finish linear-tracking install”) with hyperlinks for MCP / Automations / Settings.
+**Changed:** INSTALL/README → **2 steps** (skills add → “finish linear-tracking install”) with hyperlinks for MCP / Automations / Settings. AUTOMATION.md: default **7:00 AM user-local**; document UTC cron conversion (fix wrong afternoon display from naive `0 9`/`0 7` prefills).
 
 ## v1.2.0 — 2026-07-21
 

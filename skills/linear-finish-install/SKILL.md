@@ -46,7 +46,9 @@ Useful links:
 
 1. Open Automations UI (`open_automation` tool) so the user can create/enable **Linear tracking health**.
 2. Point them at [AUTOMATION.md](./AUTOMATION.md) for the weekly recipe (or `/automate` with that recipe).
-3. Ask them to confirm the Automation is **enabled**.
+   - Default schedule: **Monday 7:00 AM in the user’s local timezone**.
+   - Cron is UTC — convert before prefill (see AUTOMATION.md timezone table). Never pass `0 7 * * 1` as “7am local.”
+3. Ask them to confirm the Automation is **enabled** and the next run time looks like morning local time.
 
 Non-Cursor: say schedule `/linear-monitor` manually; Cursor Automation is the continuous path.
 

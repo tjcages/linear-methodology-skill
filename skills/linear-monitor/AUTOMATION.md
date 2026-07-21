@@ -8,10 +8,30 @@ Install is **incomplete** until this Cursor Automation exists. Non-Cursor agents
 |-------|--------|
 | **Name** | Linear tracking health |
 | **Description** | Weekly health check for Linear projects using linear-monitor |
-| **Trigger** | Schedule — weekly (pick a quiet weekday morning) |
+| **Trigger** | Schedule — **weekly at 7:00 AM in the user’s local timezone** (default Monday) |
 | **Tools** | Linear MCP |
 | **Instructions** | See prompt below |
 | **Write policy** | Default: **read + comment on existing issues only**. No mass issue creation. Status updates only on real health signals (§20). |
+
+### Timezone (critical)
+
+Cursor cron is **UTC**. The Automations UI shows times in the viewer’s local zone. Never prefill `0 7 * * 1` and call it “7am local” — that is 7:00 UTC (e.g. 1:00 AM Denver MDT, or worse if the UI mis-labels).
+
+**When drafting / prefilling:**
+
+1. Detect or ask the user’s IANA timezone (e.g. `America/Denver`).
+2. Convert **7:00 local** → UTC hour for the cron (account for DST).
+3. Prefill that UTC cron, and state in the draft table: “7:00 AM \<Timezone\> (cron UTC = …)”.
+4. Prefer letting the user confirm **7:00 AM** in the Automations schedule picker (local) over raw cron when unsure.
+
+**Examples (Monday 7:00 AM local → cron):**
+
+| Timezone | Winter (STD) | Summer (DST) |
+|----------|--------------|--------------|
+| America/Denver | `0 14 * * 1` (MST UTC−7) | `0 13 * * 1` (MDT UTC−6) |
+| America/New_York | `0 12 * * 1` | `0 11 * * 1` |
+| America/Los_Angeles | `0 15 * * 1` | `0 14 * * 1` |
+| UTC | `0 7 * * 1` | `0 7 * * 1` |
 
 ## Automation prompt (paste as instructions)
 
@@ -33,13 +53,13 @@ You are running the linear-monitor skill for a scheduled health check.
 
 ## How to create it
 
-1. In Cursor Agent chat, invoke `/automate` (or “create a Cursor Automation”).
-2. Paste the table + prompt above when asked for intent.
-3. Approve the draft table; finish in the Automations editor (schedule + Linear tool).
-4. Confirm the Automation appears in Automations UI.
+1. In Cursor Agent chat, invoke `/automate` or `finish linear-tracking install`.
+2. Approve the draft (verify the schedule line says **7:00 AM your timezone**).
+3. Finish in the Automations editor — set/confirm **7:00 AM local**, save, enable.
+4. Confirm the Automation appears enabled.
 
 ## Verify
 
 - Automation named **Linear tracking health** (or equivalent) exists and is enabled.
-- Next run date is set.
+- Next run shows **~7:00 AM in your local timezone** (not an unexpected afternoon time).
 - Linear tool is attached.
