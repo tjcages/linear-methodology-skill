@@ -1,21 +1,23 @@
 ---
 name: linear-finish-install
-version: 1.0.0
+version: 1.0.1
 description: >-
   Finish Linear tracking pack install after skills are present: write always-on
-  rules, verify Linear MCP auth, open the Monitor Automation draft. Use when the
-  user says "finish linear install", "finish linear-tracking install", "complete
-  setup after skills add", or right after installing the pack. Automates what
-  the CLI cannot (Cursor User Rules); guides remaining OAuth / Automation clicks.
+  rules (Linear = default source of truth every session) and verify Linear MCP
+  auth. Optionally offer Cursor Monitor Automation. Use when the user says
+  "finish linear install", "finish linear-tracking install", "complete setup
+  after skills add", or right after installing the pack.
 ---
 
 # Finish Linear tracking install
 
-Chat: [RESPONSE.md](./RESPONSE.md). Auth: [AUTH.md](./AUTH.md). Automation recipe: [AUTOMATION.md](./AUTOMATION.md). Snippet source: [ALWAYS_ON.md](./ALWAYS_ON.md).
+Chat: [RESPONSE.md](./RESPONSE.md). Auth: [AUTH.md](./AUTH.md). Snippet: [ALWAYS_ON.md](./ALWAYS_ON.md). Optional weekly health: [AUTOMATION.md](./AUTOMATION.md).
+
+**Install is complete** when always-on is loaded and Linear MCP auth works. Same skills + same SoT assumption on every harness. Cursor Automation is optional.
 
 Do these in order. Lead with the next action each turn.
 
-## 1. Always-on (automate)
+## 1. Always-on (required)
 
 **Cursor:** list user rules. If no rule titled `linear-tracking (always-on)`, add one with `cursor_dialog` (`item=rule`, `scope=user`, `action=add`, title + ALWAYS_ON.md body). If it exists, skip.
 
@@ -29,7 +31,7 @@ Do these in order. Lead with the next action each turn.
 
 Idempotent: replace the block if markers exist; else append.
 
-## 2. Linear MCP (probe)
+## 2. Linear MCP (required)
 
 Call `list_teams` (or `get_user`).
 
@@ -38,19 +40,17 @@ Call `list_teams` (or `get_user`).
 
 Useful links:
 
-- Cursor MCP: [Cursor Settings → MCP](https://cursor.com/settings) (app: Settings → MCP)
+- Cursor MCP: [Cursor Settings → MCP](https://cursor.com/settings)
 - Linear MCP docs: [Linear MCP](https://linear.app/docs/mcp)
 - Claude connectors: [claude.ai settings](https://claude.ai/settings) or `/mcp` in Claude Code
 
-## 3. Monitor Automation (required — one UI finish)
+## 3. Monitor Automation (optional — Cursor only)
 
-1. Open Automations UI (`open_automation` tool) so the user can create/enable **Linear tracking health**.
-2. Point them at [AUTOMATION.md](./AUTOMATION.md) for the weekly recipe (or `/automate` with that recipe).
-   - Default schedule: **Monday 7:00 AM in the user’s local timezone**.
-   - Cron is UTC — convert before prefill (see AUTOMATION.md timezone table). Never pass `0 7 * * 1` as “7am local.”
-3. Ask them to confirm the Automation is **enabled** and the next run time looks like morning local time.
+If this is Cursor and the user wants a weekly digest: open Automations (`open_automation`) and point at [AUTOMATION.md](./AUTOMATION.md). Default schedule Monday **7:00 AM local** (convert cron to UTC — see AUTOMATION.md).
 
-Non-Cursor: say schedule `/linear-monitor` manually; Cursor Automation is the continuous path.
+Non-Cursor: skip. They can run `/linear-monitor` anytime.
+
+Do **not** block “install complete” on Automation.
 
 ## 4. Report
 
@@ -58,6 +58,6 @@ Restate:
 
 1. Always-on: done / already present / failed (where)
 2. Linear auth: ok / needs OAuth
-3. Automation: opened editor — user must save+enable
+3. Install: **complete** if 1+2 ok — Automation offered / skipped / deferred
 
 One next action only.

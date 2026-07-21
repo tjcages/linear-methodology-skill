@@ -16,7 +16,7 @@ npx skills add tjcages/linear-methodology-skill -g -a '*' -y
 finish linear-tracking install
 ```
 
-That writes always-on rules, checks Linear auth, and opens the Monitor Automation. Details: [INSTALL.md](./INSTALL.md).
+That writes always-on rules (Linear = default source of truth) and checks Linear auth. Details: [INSTALL.md](./INSTALL.md).
 
 ## Skills
 

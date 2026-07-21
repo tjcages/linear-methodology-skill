@@ -114,6 +114,6 @@ console.log(`  Skills: ${SKILL_NAMES.join(", ")}`);
 console.log(`\nCursor User Rules cannot be written from this CLI.`);
 console.log(`Next (one sentence in Cursor Agent chat):`);
 console.log(`  finish linear-tracking install`);
-console.log(`That writes the Cursor always-on rule, checks Linear auth, and opens Automations.`);
+console.log(`That writes the Cursor always-on rule and checks Linear auth (Automation optional).`);
 console.log(`\nOr: npx skills add tjcages/linear-methodology-skill -g -a '*' -y`);
 console.log(`Then the same finish sentence. Full steps: INSTALL.md`);

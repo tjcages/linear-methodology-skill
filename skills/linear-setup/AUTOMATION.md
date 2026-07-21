@@ -1,6 +1,10 @@
-# Required Monitor Automation (2C)
+# Optional Monitor Automation (Cursor)
 
-Install is **incomplete** until this Cursor Automation exists. Non-Cursor agents: run `/linear-monitor` manually on a schedule until their harness supports an equivalent.
+Weekly health digest for Cursor. **Not required** for install to be complete.
+
+Complete install = skills installed + always-on loaded + Linear MCP auth. That gives every session the same Linear skills and the assumption that Linear is the default source of truth.
+
+Use this Automation when you want a scheduled `/linear-monitor` without opening a chat. Non-Cursor harnesses: run `/linear-monitor` manually when you want a health check.
 
 ## Plain-language recipe (feed to `/automate`)
 
@@ -51,15 +55,14 @@ You are running the linear-monitor skill for a scheduled health check.
 7. Never soft-nudge untracked git repos from an Automation run.
 ```
 
-## How to create it
+## How to create it (Cursor)
 
-1. In Cursor Agent chat, invoke `/automate` or `finish linear-tracking install`.
+1. In Agent chat, invoke `/automate` or offer it at the end of `finish linear-tracking install`.
 2. Approve the draft (verify the schedule line says **7:00 AM your timezone**).
 3. Finish in the Automations editor — set/confirm **7:00 AM local**, save, enable.
-4. Confirm the Automation appears enabled.
 
-## Verify
+## Verify (optional)
 
 - Automation named **Linear tracking health** (or equivalent) exists and is enabled.
-- Next run shows **~7:00 AM in your local timezone** (not an unexpected afternoon time).
+- Next run shows **~7:00 AM in your local timezone**.
 - Linear tool is attached.

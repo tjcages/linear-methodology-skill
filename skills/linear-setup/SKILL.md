@@ -1,6 +1,6 @@
 ---
 name: linear-setup
-version: 1.0.0
+version: 1.0.1
 description: >-
   Bootstrap or extend Linear project tracking the right way — methodology, not
   API CRUD. Use when the user asks to set up Linear tracking, track this project
@@ -63,4 +63,4 @@ Rubric ≥16/20 with no load-bearing 0, or full §26 audit.
 
 ## After setup
 
-Point user to: always-on snippet (if missing) + required Monitor Automation ([AUTOMATION.md](./AUTOMATION.md)). One next action.
+Point user to always-on (if missing) via `finish linear-tracking install`. Optional Cursor weekly health: [AUTOMATION.md](./AUTOMATION.md). One next action.
