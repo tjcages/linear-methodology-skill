@@ -13,5 +13,4 @@ Every agent, every session. Linear workspace: **team "Off-brand"**, **project "l
 - **Wire real dependencies** (`blockedBy`/`blocks`) — the wrapper is blocked by the format decision; the announcement by the wrapper.
 - **Close the loop before ending a session** — update issue state/comments for any tracked work before finishing.
 - **This repo eats its own dogfood.** Changes to METHODOLOGY.md driven by real usage get logged in DOGFOOD-LOG.md with what broke and what changed — the methodology's own §15 discipline applies to itself.
-- **Write tersely.** Titles ≤8 words; descriptions ≤3 sentences or ≤5 bullets; comments ≤3 lines; attach screenshots instead of describing visuals.
-- **Use Linear's generated branch names** (`ty/off-N-slug`) so commits/PRs auto-link.
+- Always commit to **main** unless the project is launched with real users (then use a branch/PR).
