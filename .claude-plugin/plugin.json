@@ -1,6 +1,6 @@
 {
   "name": "linear-methodology",
-  "description": "Set up and maintain Linear project tracking well — a methodology, not an API wrapper. North Star anchoring, evidence-backed backfill, honest dates. Agent Skills standard (Cursor / Claude / Codex).",
-  "version": "1.1.1",
+  "description": "Linear tracking skill pack — setup, sync, monitor, discipline. Agent Skills standard (Cursor / Claude / Codex).",
+  "version": "1.2.0",
   "author": { "name": "tjcages" }
 }

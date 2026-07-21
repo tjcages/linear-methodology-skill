@@ -1,7 +1,7 @@
 {
   "name": "linear-methodology-skill",
-  "version": "1.1.1",
-  "description": "A methodology for how AI agents set up and maintain Linear project tracking — anchored North Star, backfilled history, honest dates. Agent Skills standard: Cursor, Claude Code, Codex, and compatible agents.",
+  "version": "1.2.0",
+  "description": "Agent Skills pack for Linear project tracking — setup, sync, monitor, always-on discipline. Soft nudge for untracked repos; required Monitor Automation; ADHD-shaped chat.",
   "type": "module",
   "license": "MIT",
   "author": "tjcages",
@@ -25,8 +25,11 @@
   "files": [
     "bin",
     "skills",
+    "shared",
     ".claude-plugin",
     "README.md",
+    "INSTALL.md",
+    "JOURNEY.md",
     "LICENSE"
   ],
   "engines": {

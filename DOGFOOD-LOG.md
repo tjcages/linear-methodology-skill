@@ -132,3 +132,16 @@ Owner reviewed the created issues: descriptions/comments **too verbose**. Root c
 **Install exercised this session:** `npx skills add <local-repo> -g -a '*' -y` → canonical at `~/.agents/skills/linear-methodology` (v1.1.1), discovered by Cursor / Claude Code / Codex + ~70 other agents. Eve and PromptScript skipped (no global skill install).
 
 **Tracked as:** [OFF-208](https://linear.app/off-brand-studio/issue/OFF-208/universal-agent-skills-packaging) (milestone `Package & launch`; related OFF-88 / OFF-89 / OFF-113).
+---
+
+## Journey redesign — v1.2.0 (1B + 2C) — 2026-07-21
+
+**Not a project run** — product-journey dogfood on the skill pack itself.
+
+**What broke:** one `SKILL.md` covered bootstrap well but not the stranger path — no always-on across projects, no soft nudge, no dedicated sync/monitor, no auth Step 0, no required continuous monitor, and Linear chat buried the next action.
+
+**What changed:** skill pack (`linear-setup` / `linear-sync` / `linear-monitor` / `linear-discipline` + alias); `shared/{RESPONSE,AUTH,AUTOMATION,METHODOLOGY,EXAMPLES}`; `JOURNEY.md` + `INSTALL.md`; install incomplete until always-on snippet + Linear auth + Monitor Automation.
+
+**Smoke:** `npx skills add <local> -g -a '*' -y` installs the five skills; `list_teams` probe OK.
+
+**Tracked as:** [OFF-210](https://linear.app/off-brand-studio/issue/OFF-210/journey-redesign-install-to-monitor) (children OFF-211–OFF-219).

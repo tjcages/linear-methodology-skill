@@ -1,6 +1,6 @@
 # linear-methodology-skill — agent instructions
 
-A methodology (→ distributable Agent Skill for Cursor, Claude Code, Codex, and compatible agents) for how AI agents set up and maintain Linear project tracking. `skills/linear-methodology/` holds the artifact (SKILL.md + METHODOLOGY.md); `DOGFOOD-LOG.md` is the evidence; `TEST-PLAN.md` was the validation brief. Read `README.md` first.
+A methodology → Agent Skills **pack** (setup / sync / monitor / discipline) for how AI agents set up and maintain Linear project tracking. `skills/` + `shared/` hold the artifact; `JOURNEY.md` is the user path; `DOGFOOD-LOG.md` is the evidence. Read `README.md` then `INSTALL.md`.
 
 ## Linear tracking (non-negotiable)
 

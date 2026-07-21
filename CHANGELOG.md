@@ -2,6 +2,24 @@
 
 Methodology changelog. Terse, newest first. The methodology's own §15 self-dogfooding discipline drives what lands here — see [DOGFOOD-LOG.md](./DOGFOOD-LOG.md).
 
+## v1.2.0 — 2026-07-21
+
+Journey redesign (1B soft nudge · 2C required Monitor Automation).
+
+**Added:**
+- Skill pack: `linear-setup`, `linear-sync`, `linear-monitor`, `linear-discipline` (+ `linear-methodology` alias).
+- `shared/` — RESPONSE.md (ADHD Linear chat), AUTH.md (Step 0), AUTOMATION.md (required weekly recipe), METHODOLOGY.md, EXAMPLES.md.
+- `JOURNEY.md` — end-to-end path + edge-case matrix.
+- `INSTALL.md` — always-on snippet, auth, Automation gate, verify/update/uninstall.
+
+**Changed:** README front door; `install.mjs` installs the full pack; package 1.2.0.
+
+**What existing users should update:**
+1. `npx skills add tjcages/linear-methodology-skill -g -a '*' -y`
+2. Paste always-on snippet from INSTALL.md
+3. Create Monitor Automation from AUTOMATION.md
+4. Existing Linear boards stay valid — no re-bootstrap required
+
 ## v1.1.1 — 2026-07-21
 
 Universal Agent Skills packaging pass — same methodology, installable on Cursor / Claude Code / Codex (and other skills.sh agents).

@@ -1,6 +1,6 @@
 # Linear Tracking Methodology
 
-**Version:** 1.2.0 — see [CHANGELOG.md](../../CHANGELOG.md)
+**Version:** 1.2.0 — see [CHANGELOG.md](../CHANGELOG.md)
 
 > **What this is.** A draft of the methodology behind how Claude should set up and maintain Linear tracking for a software project — built by doing it for real on Obi (the Socials app), then generalized. This is **not yet a packaged skill.** Status (2026-07-03): methodology fully drafted, now in the **dogfood-testing phase** (§15) across the owner's other real projects. Packaging/distribution strategy is still deliberately held (§16) until testing is done.
 >

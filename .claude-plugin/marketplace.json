@@ -3,7 +3,7 @@
   "plugins": [
     {
       "name": "linear-methodology",
-      "description": "Set up and maintain Linear project tracking well — a methodology, not an API wrapper.",
+      "description": "Linear tracking skill pack — setup, sync, monitor, discipline.",
       "source": {
         "type": "github",
         "repo": "tjcages/linear-methodology-skill"

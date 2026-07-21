@@ -1,16 +1,14 @@
 #!/usr/bin/env node
-// Installs the linear-methodology skill into common Agent Skills directories
-// (Claude Code, Cursor, Codex, universal .agents). Prefer the skills CLI for
-// multi-agent installs: npx skills add tjcages/linear-methodology-skill -g -a '*' -y
-// Usage: npx github:tjcages/linear-methodology-skill  (or `npx linear-methodology-skill` once on npm)
+// Installs the linear-tracking skill pack into common Agent Skills directories.
+// Prefer: npx skills add tjcages/linear-methodology-skill -g -a '*' -y
 
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const pkgRoot = dirname(dirname(fileURLToPath(import.meta.url)));
-const skillName = "linear-methodology";
+const skillsSrc = join(pkgRoot, "skills");
 
 const DEST_ROOTS = [
   join(homedir(), ".claude", "skills"),
@@ -19,34 +17,27 @@ const DEST_ROOTS = [
   join(homedir(), ".agents", "skills"),
 ];
 
-const FILES = [
-  ["skills/linear-methodology/SKILL.md", "SKILL.md"],
-  ["skills/linear-methodology/METHODOLOGY.md", "METHODOLOGY.md"],
-  ["skills/linear-methodology/EXAMPLES.md", "EXAMPLES.md"],
-  ["README.md", "README.md"],
-  ["LICENSE", "LICENSE"],
-];
+const SKILL_NAMES = readdirSync(skillsSrc).filter((name) =>
+  existsSync(join(skillsSrc, name, "SKILL.md")),
+);
 
-for (const [src] of FILES) {
-  if (!existsSync(join(pkgRoot, src))) {
-    console.error(`✗ ${src} missing from package — corrupt install, aborting.`);
-    process.exit(1);
-  }
+if (SKILL_NAMES.length === 0) {
+  console.error("✗ No skills/*/SKILL.md found — corrupt package.");
+  process.exit(1);
 }
 
-function installTo(dest) {
+function installSkill(root, skillName) {
+  const src = join(skillsSrc, skillName);
+  const dest = join(root, skillName);
   if (existsSync(dest)) {
-    const prev = join(dest, "SKILL.md");
-    if (!existsSync(prev)) {
-      console.error(`✗ ${dest} exists but doesn't look like this skill (no SKILL.md) — not touching it.`);
+    if (!existsSync(join(dest, "SKILL.md"))) {
+      console.error(`✗ ${dest} exists but has no SKILL.md — skipping.`);
       return false;
     }
     rmSync(dest, { recursive: true });
-    console.log(`↻ Replacing existing install at ${dest}`);
   }
-
-  mkdirSync(dest, { recursive: true });
-  for (const [src, name] of FILES) cpSync(join(pkgRoot, src), join(dest, name));
+  mkdirSync(root, { recursive: true });
+  cpSync(src, dest, { recursive: true });
   console.log(`✓ ${dest}`);
   return true;
 }
@@ -54,7 +45,9 @@ function installTo(dest) {
 let ok = 0;
 for (const root of DEST_ROOTS) {
   mkdirSync(root, { recursive: true });
-  if (installTo(join(root, skillName))) ok += 1;
+  for (const name of SKILL_NAMES) {
+    if (installSkill(root, name)) ok += 1;
+  }
 }
 
 if (ok === 0) {
@@ -63,7 +56,10 @@ if (ok === 0) {
 }
 
 const version = JSON.parse(readFileSync(join(pkgRoot, "package.json"), "utf8")).version;
-console.log(`\n✓ linear-methodology ${version} installed → ${ok}/${DEST_ROOTS.length} agent skill dirs`);
-console.log(`\nNext: say "set up Linear tracking for this project" in Cursor, Claude Code, or Codex.`);
-console.log(`Requires the Linear MCP connector authorized in that agent.`);
-console.log(`For managed multi-agent installs prefer: npx skills add tjcages/linear-methodology-skill -g -a '*' -y`);
+console.log(`\n✓ linear-tracking pack ${version} → ${ok} skill installs across ${DEST_ROOTS.length} roots`);
+console.log(`  Skills: ${SKILL_NAMES.join(", ")}`);
+console.log(`\nNext (required — ~5 min):`);
+console.log(`1. Paste always-on snippet from INSTALL.md into your agent rules`);
+console.log(`2. Authorize Linear MCP (shared/AUTH.md)`);
+console.log(`3. Create Monitor Automation (shared/AUTOMATION.md via /automate)`);
+console.log(`\nPrefer managed installs: npx skills add tjcages/linear-methodology-skill -g -a '*' -y`);
