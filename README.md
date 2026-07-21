@@ -54,8 +54,10 @@ Also: backfilling history, extending an already-tracked project, reconciling sta
 ## Contents
 
 - [SKILL.md](./skills/linear-methodology/SKILL.md) — the agent-facing operating order
-- [METHODOLOGY.md](./skills/linear-methodology/METHODOLOGY.md) — the full methodology (16 sections)
+- [METHODOLOGY.md](./skills/linear-methodology/METHODOLOGY.md) — the full methodology (26 sections; §17–§26 are the v1.1 operationalization round-out)
+- [EXAMPLES.md](./skills/linear-methodology/EXAMPLES.md) — before/after transformations, incl. a messy project fixed step by step
 - [DOGFOOD-LOG.md](./DOGFOOD-LOG.md) — validation evidence
+- [CHANGELOG.md](./CHANGELOG.md) — methodology version history
 
 ## License
 

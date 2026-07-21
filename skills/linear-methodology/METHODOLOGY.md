@@ -1,5 +1,7 @@
 # Linear Tracking Methodology (working draft — pre-packaging)
 
+**Version:** 1.1.0 — see [CHANGELOG.md](../../CHANGELOG.md)
+
 > **What this is.** A draft of the methodology behind how Claude should set up and maintain Linear tracking for a software project — built by doing it for real on Obi (the Socials app), then generalized. This is **not yet a packaged skill.** Status (2026-07-03): methodology fully drafted, now in the **dogfood-testing phase** (§15) across the owner's other real projects. Packaging/distribution strategy is still deliberately held (§16) until testing is done.
 >
 > **The differentiator.** Existing community Linear skills (`linear-claude-skill`, `linear-cli-skill`) teach Claude *how to call Linear* — CRUD wrappers, auth, GraphQL fallbacks. That's solved; Claude Code's own Linear MCP already does it. What's missing from the ecosystem is *how to track a project well* — the methodology, not the mechanics. This doc is that methodology.
@@ -13,6 +15,8 @@
 Tracking infrastructure without a shared theory of the product decays into a pile of tickets nobody trusts. The fix isn't a better ticket template — it's **anchoring the tracking structure to a North Star document**, so every phase, milestone, and issue is a *derivation* of something true about the project, not an invention of the tracking tool.
 
 This is not a new idea invented for Linear — it's what already worked for Obi (`docs/manifesto.md` → `docs/inventory-audit.md` → `docs/migration-roadmap.md`, then Linear mirrors + derives structure from that trio). The methodology generalizes that pattern.
+
+§0–§16 are the core methodology. **§17–§26 (Extended guidance, v1.1 round-out)** turn it into a repeatable system — a project-shape decision tree (§17), a scoreable readiness rubric (§18), a runnable self-audit (§26), plus anti-patterns, cadence, migration, and taxonomy guardrails. Reach for them when you need the operational version of the principle a core section states. Worked before/after transformations live in [EXAMPLES.md](./EXAMPLES.md).
 
 **Automation-first, manual setup is an acceptable one-time cost.** Wherever the API/MCP can do something, it should — the goal is agents managing the tracking day-to-day, not a human re-doing setup steps per project. A handful of one-time manual clicks (creating a Cycle scheme, a label taxonomy, an Initiative) is fine; *recurring* manual burden is the thing to design away.
 
@@ -272,3 +276,184 @@ Before this becomes a distributable skill, it needs to survive being run on real
 ## 16. Distribution — deliberately not decided here
 
 Per the owner: hold on packaging/distribution strategy until this methodology is validated and the open gaps above are closed. This doc is the input to that decision, not the decision itself.
+
+---
+
+# Extended guidance (v1.1 round-out)
+
+These sections round the methodology from "good practice" into a repeatable system with guardrails. Added 2026-07-21; see CHANGELOG.md.
+
+## 17. Project-shape decision tree
+
+Before §2's project *type*, answer a coarser question: **which tracking setup fits this repo at all?** Type (`Product`/`Tool`/…) picks labels and tracks; shape picks how heavy the whole apparatus is. Six shapes, decided by three questions:
+
+1. **Is a Linear project already connected?** Yes → *already-tracked rescue* (§1a, §22a/b). No → continue.
+2. **Is there shipped history to backfill (roadmap ✓s, CHANGELOG, git log)?** Yes and it's messy/partial/late → *backfill-first* (§22c). Yes and clean → normal bootstrap. No → *fresh bootstrap*.
+3. **What's the tracking meta-goal (§1b Q5)?** Launch/distribute → full multi-track. Durable record → backfill + one forward backlog. Bug-only/parked → maintenance mode (§21).
+
+| Shape | Milestone pattern | Issue granularity | Cadence |
+|---|---|---|---|
+| Product / app | Engineering phases + launch-readiness + rollout (§3/§7/§8) | Feature-level | Per milestone close + health changes (§20) |
+| Dev tool / CLI | 1–3: backfill + readiness + rollout, keyed off launch goal (§7) | Feature-level | Per milestone close; weekly if actively building |
+| Library / package (already shipped) | Per-release backfill + one forward track | Per-release (CHANGELOG is the record) | On release + marketing beats |
+| Client work | Deliverable-phase milestones + a sign-off/exit milestone (§7) | Feature or deliverable-level | Per deliverable + status to stakeholder |
+| Already-tracked rescue | Adapt to existing; add only missing tracks (§1a, §22) | Match what's there | Resume existing rhythm |
+| Fresh bootstrap | Derive from North Star 1:1 (§3) | Ask explicitly (§4) | Bootstrap update, then per §20 |
+
+**Rule:** the shape sets the ceiling on structure; the meta-goal (§1b Q5) sets the actual amount. A `Tool` with a launch goal outweighs a `Product` with none — proven on visual-cursor (§7).
+
+## 18. Completeness & readiness rubric
+
+A scoreable check for "is setup actually done?" — not a vibe. Score each dimension **0** (absent), **1** (partial), **2** (solid). Max 20.
+
+| # | Dimension | 2 = |
+|---|---|---|
+| 1 | Project exists + repo/GitHub linked | Project found, branch names auto-link |
+| 2 | North Star exists + referenced | Doc read, structure derived from it (§1b) |
+| 3 | Milestones map to real phases | 1:1 with the plan, none invented (§3) |
+| 4 | Every issue has a milestone | Zero orphans (§4) |
+| 5 | Backfilled history with evidence | Done + backlog reconstructs the roadmap (§4.5) |
+| 6 | Lifecycle honored | States match reality, no perpetual-in-progress (§5) |
+| 7 | Dependencies wired | Real `blockedBy`/`blocks` on the critical path (§4) |
+| 8 | Launch/exit plan present (if launch goal) | Readiness track + defined "done" (§7); N/A → score 2 |
+| 9 | Discipline installed in CLAUDE.md | Protocol written where future sessions read it (§5) |
+| 10 | No live anti-patterns | Clean against the §19 list |
+
+**Threshold:** **≥16/20 and no dimension at 0** = done. **12–15** = functional but soft, name the gaps. **<12** = not set up, keep going. Dimensions 1–6 are load-bearing — a 0 on any of them fails the pass regardless of total. Run this via the §26 self-audit.
+
+## 19. Anti-patterns & failure modes
+
+| Symptom | Why it's bad | Fix |
+|---|---|---|
+| **Fake-precision dates** — target dates with no estimate behind them | Reads as a commitment nobody made; breeds alarm fatigue (§9) | Dates only with a real signal; else none (§3) |
+| **Milestone spam** — 10+ milestones on a small repo | Nothing scans; phases blur | 3–6 outcome milestones (§23) |
+| **Status theater** — updates on every increment | Drowns the real health signals | Updates at milestone/health moments only (§20) |
+| **Issue soup** — everything one flat backlog, no milestones | Un-navigable; no phase story | Every issue gets a milestone (§4) |
+| **Duplicated roadmap layers** — plan in a doc *and* re-typed in issue bodies | Two sources drift out of sync | Milestone = phase; issue points at the doc |
+| **Backlog hoarding** — someday-maybes filed as real issues | Buries the actual next work | Keep speculative work out; file when identified |
+| **Orphan issues** — no milestone, no labels | Mis-filed, invisible to phase views | Assign or delete (§4) |
+| **Perpetual in-progress** — issues `In Progress` for weeks | State stops meaning anything | Close the loop or comment what's left (§5) |
+
+## 20. Update cadence rules
+
+Two kinds of trigger. Don't post on churn.
+
+**Auto-triggered (post without being asked):**
+- A milestone closes → status update summarizing what shipped.
+- Health changes `onTrack`↔`atRisk`↔`offTrack` → post the moment it's known, bad news first (§9).
+- A target date approaches with issues not trending `Done` → `atRisk` + chat flag (§9).
+- Pre-launch: one readiness-state update before the launch beat goes out (§7).
+
+**Manual-judgment (post if it's a real signal):**
+- Actively-building project with no milestone close for a week → a short "still on track, here's where" beat.
+- A significant scope change or drift-audit finding (§6).
+
+**Do NOT post when:** no real change since the last update; mid-task progress that issue state already covers; you just want to show activity. Individual issue state is the incremental record — status updates are for stakeholders, not a work log (§9).
+
+## 21. Maintenance-mode guidance
+
+After launch, the method gets lighter — but doesn't stop. How it changes by post-launch shape:
+
+- **Bugs-only project:** no phase milestones. One rolling `Maintenance` milestone (or none); issues are fixes, filed as they arise, `Done` on merge. Cadence: no periodic updates — post only on a notable fix or regression.
+- **Slow-burn tool:** occasional feature waves. Spin a themed milestone per wave (§23), close it, go quiet again. No standing cadence between waves.
+- **Parked project:** deliberately paused. Post one `offTrack`/paused status update stating *why* and the resume condition, then stop. Don't leave issues `In Progress` — comment and drop to `Backlog` (§5).
+- **Revived project:** re-run the §26 self-audit first — parked projects drift from reality. Backfill anything shipped while parked (§22c), then resume normal cadence.
+- **When to archive:** the exit plan (§7) fired and there's no resume condition, or the repo is dead. Post a final update, then archive the Linear project. An archived project with a clean Done history is a better artifact than a live one full of stale `In Progress`.
+
+## 22. Migration & rescue playbooks
+
+Three flows for projects that aren't clean bootstraps. All obey §1a (confirm before writing) and reuse §4's backfill algorithm — don't repeat it, invoke it.
+
+**(a) Messy existing project** (real issues, but disorganized):
+1. Enumerate everything (§1a step 1); summarize the current organization back to the user.
+2. Score it with the §18 rubric to name the gaps concretely.
+3. Get explicit per-category consent (§1a step 3) — reorganizing is higher-risk than extending.
+4. Fix in order: assign orphan issues to milestones → collapse milestone spam to 3–6 (§23) → wire missing dependencies → install the CLAUDE.md discipline (§5).
+5. Post one status update recording the cleanup; don't touch off-limits/other-owned issues.
+
+**(b) Half-tracked project** (some tracked, a whole initiative missing — the Obi native-editor case, §4.7):
+1. Scan the repo's `docs/` for roadmap-shaped docs with no Linear presence (§4 step 7), not just the mirrored ones.
+2. For each untracked track, confirm it's genuinely separate, then give it its own milestone set (§3) — never fold into an existing one.
+3. Run §4 backfill on that track only; leave the already-tracked side untouched.
+4. Cross-check (§4.5) that the repo's full doc set now has Linear coverage.
+
+**(c) Tracking started too late / backfill** (project ran a while with nothing tracked):
+1. Rank the "what's already done" sources (§4 step 1) — CHANGELOG > roadmap ✓s > git log.
+2. Run the §4 backfill algorithm end-to-end; `Done` only with evidence (§4 step 3), corroborate doc claims against the user (§4 step 8).
+3. Pick granularity by shape (§17): per-release if a CHANGELOG carries the detail, else feature-level.
+4. Then bootstrap forward structure normally (§3) — backfill first so the project reads as mature from day one.
+
+## 23. Milestone design guide
+
+- **How many:** **3–6** for most projects. Under 3, milestones aren't earning their keep — use issues. Over ~8 on a single track, they've become a to-do list; collapse. (Obi's 15 is *three* tracks of ~5, not one list of 15 — §3.)
+- **Milestone vs. issue:** a milestone is a **phase/outcome** with a beginning and an end; an issue is a **unit of work** inside one. If it has no issues under it, it's an issue, not a milestone.
+- **Naming — outcome, not activity.** Name the state the project reaches, not the work done to get there.
+
+  | Bad (activity) | Good (outcome) |
+  |---|---|
+  | "Work on auth" | "Phase 2 — Accounts & login" |
+  | "Do launch stuff" | "Launch readiness" |
+  | "Fix bugs" | "1.0 stability" |
+
+- **Description + target date:** description ≤3 sentences saying what "done" means for this phase and how it derives from the North Star. Target date **only with a real signal** (§3) — an estimate plus a dependency sanity-check (§9), never an aspiration.
+
+## 24. Issue taxonomy
+
+Five working categories — a lens for coverage, not labels to create:
+
+- **Foundational** — the core build work; maps to engineering-phase milestones (§3).
+- **Launch** — readiness + rollout beats (§7/§8); exists only with a launch goal.
+- **Polish** — refinement, a11y, perf; keep as a light backlog, don't let it crowd foundational work.
+- **Risk / spike** — investigations and de-riskers; time-box them, and file the *decision* they produce as its own issue.
+- **Backfilled-done** — retroactive `Done` with evidence (§4); the provable history.
+
+**Split by milestone, not by inventing labels.** A category is usually already expressed by *which milestone* an issue sits in — don't add a `type:` label that duplicates the milestone. Reserve labels for the orthogonal dimension milestones can't express: **area/module seams** (§2), namespaced in a label group when the team hosts many projects (§4). Rule of thumb: milestone answers *when/what phase*, label answers *what part of the code* — if a proposed label answers "when," it's a milestone.
+
+## 25. Compatibility matrix
+
+How conventions shift across who's running the project:
+
+| Convention | Solo founder | Multi-person team | Reusable tool / library |
+|---|---|---|---|
+| **Assignment** | Skip / self-assign | Assign every issue; unassigned = unowned | Maintainer or self-assign |
+| **Branch naming** | Linear auto-name (`ty/off-N-slug`) | Linear auto-name, non-negotiable (auto-links PRs) | Linear auto-name |
+| **Update cadence** | Milestone close + health changes (§20) | Add a weekly team-visible beat | On release + marketing beats |
+| **Review** | Optional; CI is the gate | PR review required before `Done` | PR review + green CI required |
+| **Milestone granularity** | 3–6, loose dates | 3–6, dates that sync with team commitments | Per-release + one forward track (§17) |
+
+Solo defaults keep overhead near zero; team columns add the coordination surface (ownership, review, shared dates) a second person needs; library columns center on releases over phases.
+
+## 26. Self-audit pass
+
+A repeatable procedure to grade an existing project's Linear hygiene. Operationalizes §18 — it *outputs a gap list + fixes*, it isn't prose. Run it on any project you're asked to audit, revive (§21), or rescue (§22).
+
+**Procedure (ordered — stop-conditions matter):**
+1. **Locate & link.** Confirm the Linear project and its repo/GitHub link (§18 #1).
+2. **Enumerate.** Pull all issues (open+closed), milestones, labels, documents, status updates (§1a step 1). Don't write yet.
+3. **Score.** Walk the §18 rubric, assign each dimension 0/1/2, note the evidence for each score.
+4. **Check anti-patterns.** Test against every row of §19; flag each that's live.
+5. **Check coverage.** Backfill cross-check (§4.5): does Done + backlog reconstruct the roadmap? Scan `docs/` for unmirrored tracks (§4.7 / §22b).
+6. **Compute verdict.** Total the score, apply the §18 threshold (≥16 and no 0; 1–6 load-bearing).
+7. **Emit the report** in the template below. Recommend fixes; **do not apply them without consent** (§1a) unless the task explicitly said to.
+
+**Output template:**
+
+```
+## Linear self-audit — <project> (<date>)
+Score: N/20 — <PASS ≥16 / SOFT 12–15 / FAIL <12>
+
+Rubric (§18):
+  1 Project+link .......... 0|1|2  — <evidence>
+  ... (all 10 dimensions) ...
+
+Anti-patterns (§19): <none | list each live one>
+Coverage (§4.5): <reconstructs roadmap? unmirrored tracks?>
+
+Gaps (ordered by severity):
+  - <gap> → <fix + § ref>
+
+Recommended next actions:
+  1. <action>
+```
+
+An audit that doesn't end in filed/recommended actions is just a document nobody acts on (§6).

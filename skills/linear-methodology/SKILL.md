@@ -1,5 +1,6 @@
 ---
 name: linear-methodology
+version: 1.1.0
 description: >-
   Set up and maintain Linear project tracking the right way — a methodology,
   not an API wrapper. Use whenever: the user asks to "set up Linear tracking",
@@ -47,11 +48,11 @@ Find the project constitution — manifesto, README-as-vision, strategy doc. **A
 
 ### 3. Project type (§2)
 
-`Product` / `Tool` / `Drop` / `Marketing` (a suggested set, not a law). Products get platform area labels (`iOS`/`Web`/`Backend`); Tools get module-seam labels — **namespaced under a project-named label group** when the team hosts multiple projects (§4), since issue labels are team-scoped. 3–5 labels max; skip labels entirely if the project is too small to filter.
+`Product` / `Tool` / `Drop` / `Marketing` (a suggested set, not a law). Products get platform area labels (`iOS`/`Web`/`Backend`); Tools get module-seam labels — **namespaced under a project-named label group** when the team hosts multiple projects (§4), since issue labels are team-scoped. 3–5 labels max; skip labels entirely if the project is too small to filter. If the *tracking shape* itself is unclear (fresh vs. rescue vs. already-launched library), run the §17 decision tree first — it picks how heavy the whole apparatus should be.
 
 ### 4. Derive structure (§3)
 
-Milestones = the roadmap's phases 1:1 — never invented. Separate timelines get separate milestone sets (engineering / launch readiness / rollout), never folded together. **Target dates only with a real signal** — a fabricated date is worse than none. Cycles are manual-only (§11); default to milestones.
+Milestones = the roadmap's phases 1:1 — never invented. Separate timelines get separate milestone sets (engineering / launch readiness / rollout), never folded together. **Target dates only with a real signal** — a fabricated date is worse than none. Cycles are manual-only (§11); default to milestones. Keep it to 3–6 outcome-named milestones per track and split issues by milestone rather than inventing type-labels (§23, §24).
 
 ### 5. Backfill (§4 — the highest-value first pass)
 
@@ -73,6 +74,10 @@ Write the tracking protocol into the repo's `CLAUDE.md` with the actual team/pro
 
 Status updates at real milestone moments only — phase completions and health changes, not routine work. Dates are accountability: as a target approaches with issues not trending Done, post `atRisk` and say it in chat — before the date passes, not after. Suggest a North Star drift audit at each phase close. Bad news gets reported the moment it's known.
 
+### 9. Confirm it's actually done (§18, §26)
+
+Setup isn't "done" by vibe. Score the §18 rubric (10 dimensions × 0–2; **pass = ≥16/20 with no load-bearing 0**) or run the full §26 self-audit, which outputs a gap list + recommended fixes. Use the same audit to grade, revive (§21), or rescue (§22) an existing project. Watch for the §19 anti-patterns throughout.
+
 ## What good output looks like
 
-A project a stranger can read: backfilled `Done` history proving what shipped (with evidence in every description), open work in dated-or-undated milestones matching the real plan, dependencies visible in relations rather than tribal knowledge, and a repo whose own CLAUDE.md keeps every future session honest. See the [dogfood log](https://github.com/tjcages/linear-methodology-skill/blob/main/DOGFOOD-LOG.md) for real before/afters.
+A project a stranger can read: backfilled `Done` history proving what shipped (with evidence in every description), open work in dated-or-undated milestones matching the real plan, dependencies visible in relations rather than tribal knowledge, and a repo whose own CLAUDE.md keeps every future session honest. It scores ≥16/20 on the §18 rubric with no live §19 anti-patterns. See [EXAMPLES.md](./EXAMPLES.md) for worked before/afters (including a messy project fixed step by step), and the [dogfood log](https://github.com/tjcages/linear-methodology-skill/blob/main/DOGFOOD-LOG.md) for the real runs behind them.

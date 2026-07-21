@@ -106,3 +106,15 @@ Owner reviewed the created issues: descriptions/comments **too verbose**. Root c
 **What worked:** SKILL.md's condensed flow was sufficient — no need to open METHODOLOGY.md. New meta-goal answer surfaced: "already launched, marketing push" → single `Marketing push` milestone, no readiness track. Per-release granularity chosen (first time) — 3 Done issues straight from CHANGELOG, module labels correctly skipped. Terse-writing rules applied throughout; hero.webp attached at bootstrap.
 
 **Friction:** none methodology-level. The skill's operating order held for a fourth project shape (launched-quietly, announce-later).
+
+---
+
+## Round-out — v1.1 operationalization — 2026-07-21
+
+**Not a project run** — a self-dogfooding pass on the methodology itself, per §15's "the tool eats its own dogfood" discipline applied to the tool.
+
+**What broke:** across the 5 runs the *principles* held, but the doc was light on **operationalization** — it said what good looks like without a way to decide the setup shape up front, judge when setup is actually "done," or audit a project that already exists. "Is this tracked well?" had no answerable form; rescuing a messy/half-tracked project meant re-deriving the steps each time; there was no scoreable exit for a bootstrap.
+
+**What changed:** added §17–§26 (Extended guidance band) — a project-shape decision tree (§17), a scoreable readiness rubric (§18, threshold ≥16/20), anti-patterns table (§19), cadence rules (§20), maintenance-mode (§21), migration/rescue playbooks (§22), milestone-design (§23), issue taxonomy (§24), compatibility matrix (§25), and a runnable self-audit (§26) that outputs a gap list. Added EXAMPLES.md (before/afters grounded in these runs + one messy project fixed step by step) and CHANGELOG.md (v1.0.0 / v1.1.0). SKILL.md, README.md, and this log updated to surface the new material. No §0–§16 meaning changed — the round-out sits on top of a validated core, sourced from the friction and judgment calls these 5 runs already recorded (label groups, doc-claims-as-evidence, meta-goal-over-type, untracked-second-track).
+
+**Tracked as:** OFF-196 → OFF-207 in linear-methodology-skill (milestone `Package & launch`).
