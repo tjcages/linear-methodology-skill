@@ -5,7 +5,7 @@ Locked decisions: **1B** soft nudge · **2C** Monitor Automation required.
 ## One-paste path (stranger → ready)
 
 1. Run `npx skills add tjcages/linear-methodology-skill -g -a '*' -y`
-2. In Cursor Agent chat: `finish linear-tracking install`  
+2. In Agent chat: `finish linear-tracking install`  
    → writes always-on (Cursor User Rule + file snippets), probes Linear auth, opens [Automations](https://cursor.com/automations)
 3. Complete any prompted OAuth / save the Monitor Automation
 

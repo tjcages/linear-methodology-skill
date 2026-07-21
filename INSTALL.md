@@ -26,7 +26,7 @@ This installs `linear-setup`, `linear-sync`, `linear-monitor`, `linear-disciplin
 
 ### Step 2 — Finish in the agent (~2 min)
 
-In **Cursor Agent** chat, say exactly:
+In Agent chat, say exactly:
 
 ```text
 finish linear-tracking install

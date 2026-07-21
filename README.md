@@ -1,6 +1,6 @@
-# Linear Methodology (Agent Skills pack)
+# Linear Methodology
 
-**Teach your AI agent to track a project well — not just to call Linear's API.**
+**A proven methodology for building and tracking features, projects, and issues across numerous builds.**
 
 ## Install (2 steps)
 
@@ -10,7 +10,7 @@
 npx skills add tjcages/linear-methodology-skill -g -a '*' -y
 ```
 
-**2.** In Cursor Agent chat:
+**2.** In Agent chat:
 
 ```text
 finish linear-tracking install
@@ -30,10 +30,22 @@ That writes always-on rules, checks Linear auth, and opens the Monitor Automatio
 
 ## Use
 
-> "Set up Linear tracking for this project."
+Slash:
+
+```text
+/linear-setup
+/linear-sync
+/linear-monitor
+/linear-finish-install
+```
+
+Or say: “Set up Linear tracking for this project.” · “Sync Linear” · “Linear health check” · “finish linear-tracking install”
+
+`linear-discipline` is always-on (user rule) — no slash needed.
 
 ## Contents
 
+- Site: [offbr.co/skills/linear-methodology](https://offbr.co/skills/linear-methodology)
 - [INSTALL.md](./INSTALL.md) · [JOURNEY.md](./JOURNEY.md) · [shared/](./shared/) · [skills/](./skills/)
 - [CHANGELOG.md](./CHANGELOG.md) · [DOGFOOD-LOG.md](./DOGFOOD-LOG.md)
 
