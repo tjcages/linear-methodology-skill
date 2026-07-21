@@ -12,6 +12,6 @@ First public release.
 1. `npx skills add tjcages/linear-methodology-skill -g -a '*' -y`
 2. In Agent chat: `finish linear-tracking install`
 
-**Includes:** soft nudge for untracked repos, required weekly Monitor Automation, ADHD-shaped Linear chat, always-on discipline. Validated across multiple real builds before ship — see [DOGFOOD-LOG.md](./DOGFOOD-LOG.md).
+**Includes:** soft nudge for untracked repos, required weekly Monitor Automation, ADHD-shaped Linear chat, always-on discipline. Validated across multiple real builds before ship.
 
 Site: [offbr.co/skills/linear-methodology](https://offbr.co/skills/linear-methodology)

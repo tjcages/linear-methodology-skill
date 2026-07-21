@@ -2,7 +2,7 @@
 
 **Goal:** one paste + one agent sentence. Manual fallback only if something fails.
 
-Journey: [JOURNEY.md](./JOURNEY.md) · Always-on text: [shared/ALWAYS_ON.md](./shared/ALWAYS_ON.md)
+Always-on text: [shared/ALWAYS_ON.md](./shared/ALWAYS_ON.md)
 
 ---
 

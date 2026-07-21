@@ -45,8 +45,7 @@ Or say: “Set up Linear tracking for this project.” · “Sync Linear” · �
 ## More
 
 - Site: [offbr.co/skills/linear-methodology](https://offbr.co/skills/linear-methodology)
-- [INSTALL.md](./INSTALL.md) · [JOURNEY.md](./JOURNEY.md) · [CHANGELOG.md](./CHANGELOG.md)
-- Evidence: [DOGFOOD-LOG.md](./DOGFOOD-LOG.md)
+- [INSTALL.md](./INSTALL.md) · [CHANGELOG.md](./CHANGELOG.md)
 
 ## License
 

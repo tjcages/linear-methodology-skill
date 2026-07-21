@@ -267,7 +267,7 @@ Before this becomes a distributable skill, it needs to survive being run on real
 4. **Compare the end state against the Obi reference implementation** — does the resulting Linear setup have the same *kind* of structure (milestones, labels, backfilled history, relations) even though the specifics differ? If the shape is unrecognizable, something in the methodology under-specified the outcome.
 5. **Update this doc immediately, not at the end of a testing phase** — each dogfood run should leave the methodology measurably better. Same "leave it cleaner than you found it" discipline the methodology itself preaches, applied reflexively.
 
-**Where results live:** [`DOGFOOD-LOG.md`](./DOGFOOD-LOG.md) in this repo — one entry per project tested, dated, with what worked, what broke, and what changed in the methodology as a result. This is the evidence base for "this actually works across projects," which is the whole claim being made before distributing it.
+**Where results live:** a dated log entry per project tested (what worked, what broke, what changed in the methodology). That evidence base is how you know the methodology works across projects — keep it with the methodology source if you're extending it.
 
 **Exit criteria for "ready to package":** every item in §14 (open gaps) is either resolved or deliberately deferred with a stated reason, and at least 2–3 dogfood runs across genuinely different project types (at minimum: one `Tool`, one `Product` with a real launch, ideally one `Drop`/`Marketing`) have each produced a clean run with no undocumented judgment calls.
 

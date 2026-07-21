@@ -1,6 +1,6 @@
 # Examples — before / after
 
-Grounded transformations showing what the methodology changes in practice. Each ties back to a section in [METHODOLOGY.md](./METHODOLOGY.md). Real projects are named where the change actually happened (see [DOGFOOD-LOG.md](../../DOGFOOD-LOG.md)); specifics are illustrative, not exhaustive history.
+Grounded transformations showing what the methodology changes in practice. Each ties back to a section in [METHODOLOGY.md](./METHODOLOGY.md). Real projects are named where the change actually happened; specifics are illustrative, not exhaustive history.
 
 ---
 
